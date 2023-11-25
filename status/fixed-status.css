@@ -1,0 +1,45 @@
+/* スクロールバー削除 */
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+
+/* キャラアイコンを削除 */
+/*  コメントアウトしていますが、キャラアイコンを消したいときはこちら↓をアンコメントしてください */
+/* 
+.MuiBadge-root {
+  display: none;
+}*/
+
+/* ステータスの横並びの数調整 */
+.MuiBadge-root+div>div {
+    margin-left: 4px;
+    max-width: 200px;/*ここで横並びの数制御。ステータスの横幅と関連*/
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* ステータスの白枠の横の長さ調整 */
+.MuiBadge-root+div>div>div {
+    margin: 2px;
+    width: 80px;/*ステータスの横幅制御：デフォルト96px*/
+    position: relative;
+    cursor: pointer;
+}
+
+.MuiAvatar-root {
+    /*width: 40px;
+    height: 40px;*/
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    font-size: 1.25rem;
+    align-items: flex-start;
+    /*align-items: center;*/
+    flex-shrink: 0;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    line-height: 1;
+    user-select: none;
+    /*border-radius: 50%;*/
+    justify-content: center;
+}
