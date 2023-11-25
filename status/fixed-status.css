@@ -1,20 +1,26 @@
 /* スクロールバー削除 */
 ::-webkit-scrollbar {
-  display: none !important;
+    display: none !important;
 }
 
-
 /* キャラアイコンを削除 */
-/*  コメントアウトしていますが、キャラアイコンを消したいときはこちら↓をアンコメントしてください */
-/* 
 .MuiBadge-root {
-  display: none;
-}*/
+    display: var(--icon-switch, block);
+}
+
+/*ステータスバーの背景色変更*/
+.MuiBadge-root+div>div>div {
+    background: var(--status-background-color);/*全部一括で変えたい場合はこちらのみ使用*/
+}
+/*ステータスバーのゲージ色変更*/
+.MuiBadge-root+div>div>div>div>div+div {
+    background: var(--status-gauge-color);/*全部一括で変えたい場合はこちらのみ使用*/
+}
 
 /* ステータスの横並びの数調整 */
 .MuiBadge-root+div>div {
     margin-left: 4px;
-    max-width: 200px;/*ここで横並びの数制御。ステータスの横幅と関連*/
+    max-width: var(--status-number);/*変数化済(ここで横並びの数制御。ステータスの横幅と関連)*/
     display: flex;
     flex-wrap: wrap;
 }
@@ -22,24 +28,112 @@
 /* ステータスの白枠の横の長さ調整 */
 .MuiBadge-root+div>div>div {
     margin: 2px;
-    width: 80px;/*ステータスの横幅制御：デフォルト96px*/
+    width: var(--status-width);/*変数化済(ステータスの横幅制御：デフォルト96px)*/
     position: relative;
     cursor: pointer;
 }
 
+/*キャラ関連ここ*/
 .MuiAvatar-root {
     /*width: 40px;
-    height: 40px;*/
+    height: 40px;*//*ここを弄れば縦長アイコンとかにもできます*/
     display: flex;
     overflow: hidden;
     position: relative;
     font-size: 1.25rem;
-    align-items: flex-start;
+    align-items: flex-start;/*アイコン位置調整*/
     /*align-items: center;*/
     flex-shrink: 0;
-    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-family: var(--font-family-all);
     line-height: 1;
     user-select: none;
     /*border-radius: 50%;*/
     justify-content: center;
 }
+.MuiButtonBase-root {
+    background-color: var(--character-background-color);
+}
+
+/*文字装飾変更*/
+.MuiTypography-body2 {
+    font-size:  var(--font-size-status);
+    font-family: var(--font-family-all);
+    color: var(--font-color-status);
+    /*font-weight: 400;*/
+    /*line-height: 1.43;*/
+    letter-spacing: 0.01071em; 
+}
+
+
+/*イニシアチブ部分*/
+.MuiBadge-root .MuiBadge-badge{
+    background: var(--initiative-background-color);
+    color: var(--initiative-font-color);
+}
+
+.MuiBadge-badge {
+    height: 20px;
+    display: flex;
+    padding: 0 6px;
+    z-index: 1;
+    position: absolute;
+    flex-wrap: wrap;
+    font-size: 0.75rem;/*フォントサイズ変えたければここ*/
+    color: var(--font-color-status);
+    min-width: 20px;
+    box-sizing: border-box;
+    transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    align-items: center;
+    font-family: var(--font-family-all);
+    font-weight: 500;
+    line-height: 1;
+    align-content: center;
+    border-radius: 10px;
+    flex-direction: row;
+    justify-content: center;
+}
+
+:root {
+    /*ステータスの横幅や並びの数制御*/
+    --status-number: 200px;/*ここで横並びの数制御。ステータスの横幅と関連*/
+    --status-width:   80px;/*ステータスの横幅制御：デフォルト96px*/
+
+    /*ステータスのフォント等のデザイン変更*/
+    --font-color-status: rgb(66, 66, 66);/*デフォはrgb(66, 66, 66)*/
+    --font-size-status: 0.875rem;/*HP等のフォントサイズ*/
+    --font-family-all: "Roboto", "Helvetica", "Arial", sans-serif;/*イニシアチブ含めたフォント変更*/
+
+    /*ステータスのバーデザイン関連*/
+    --status-background-color: transparent;/*transparent;(245, 245, 245);*/
+    --status-gauge-color: rgb(245, 245, 245);
+
+    /*イニシアチブ部分のデザイン変更*/
+    --initiative-font-color: rgb(66, 66, 66);
+    --initiative-background-color: rgb(245, 245, 245);/*背景色;*/
+
+    /*キャラアイコンのデザイン変更*/
+    /*--icon-switch: none;*/
+    --character-background-color: transparent;/*背景色。デフォルトはtransparent*/
+
+    /*色は#000000のようにカラーコードも使えます。キャラクターカラーと揃えたい場合はご活用ください。*/
+}
+
+
+/*個別変更例
+.MuiBadge-root+div>div>div+div {
+    background: #145450;
+}
+.MuiBadge-root+div>div>div+div+div {
+    background: #655450;
+}
+.MuiBadge-root+div>div>div+div+div+div {
+    background: #141450;
+}*/
+
+/*個別変更例
+.MuiBadge-root+div>div>div+div>div>div+div {
+    background: #005555;
+}
+.MuiBadge-root+div>div>div+div+div>div>div+div {
+    background: #990099;
+}*/
