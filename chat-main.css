@@ -1,0 +1,86 @@
+/* OBS */
+body {
+/*  background-color: rgba(170, 222, 242, 0.5);*/
+  background-color: rgba(222, 222, 222, 0);
+  margin: 0px auto;
+  overflow: hidden;
+}
+
+/**************************
+　個別
+**************************/
+/* 入力欄 */
+form > div {
+  display: none !important;
+}
+
+/**************************
+　共通
+**************************/
+
+/* ヘッダー削除 */
+/* headerのみだとチャットのタブも消える */
+header>.MuiToolbar-gutters,
+/* スクロールバー */
+::-webkit-scrollbar {
+  display: none !important;
+}
+
+
+/**************************
+　チャット
+**************************/
+.MuiTypography-root {
+  font-family:var(--font-type);
+}
+
+/* テキストタイトル */
+.MuiListItemText-primary {
+  display: var(--text-title, block);
+}
+
+
+/* 本文 */
+p.MuiTypography-root.MuiTypography-body2 {
+  color: var(--font-color);
+  text-shadow: var(--font-color-shadow);
+}
+
+
+
+/* 背景色 */
+.MuiPaper-root {
+  background-color: var(--background-color, rgba(222, 222, 222, 0.2));
+/*  background-color: rgba(170, 222, 242, 0.5);*/
+}
+
+/**************************
+　アニメーション
+**************************/
+
+.MuiListItem-gutters {
+  animation-name: fadeRightToLeft;
+  animation-duration: 2s;
+}
+
+@keyframes fadeRightToLeft {
+  from {
+    opacity: 0;
+    transform: translateX(150px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+:root {
+  /*--background-color: rgba(170, 222, 242, 0.8);*/
+  /*--text-title: none;*/
+  /*--font-type: serif;*/
+  /*--font-color: rgb(65, 65, 65);字の色*//
+  --font-color-fail:    rgb(220, 0, 78);     /*rgb(220, 0, 78)*/
+  --font-color-success: rgb(33, 150, 243); /*rgb(33, 150, 243)*/
+}
