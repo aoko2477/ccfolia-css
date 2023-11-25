@@ -64,7 +64,6 @@
     letter-spacing: 0.01071em; 
 }
 
-
 /*イニシアチブ部分*/
 .MuiBadge-root .MuiBadge-badge{
     background: var(--initiative-background-color);
