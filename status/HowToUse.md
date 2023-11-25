@@ -3,7 +3,7 @@
 https://qiita.com/aoko_2477/items/d04ad1654016262c063e
 に従って使ってください。
 ```css
-@import url("https://github.io/aoko2477/ccfolia-css/status/fixed-status.css")
+@import url("https://aoko2477.github.io/ccfolia-css/status/fixed-status.css");
 
 :root {
     /*ステータスの横幅や並びの数制御*/
