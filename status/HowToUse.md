@@ -24,7 +24,7 @@ https://qiita.com/aoko_2477/items/d04ad1654016262c063e
     --initiative-background-color: rgb(245, 245, 245);/*背景色;*/
 
     /*キャラアイコンのデザイン変更*/
-    /*--icon-switch: none;*/
+    /*--icon-switch: none;*//*キャラアイコンを消したいときはここ*/
     --character-background-color: transparent;/*背景色。デフォルトはtransparent*/
 
     /*色は#000000のようにカラーコードも使えます。キャラクターカラーと揃えたい場合はご活用ください。*/
