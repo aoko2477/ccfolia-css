@@ -3,8 +3,8 @@
 
 button,
 div {
-    width: 80%;/*100%*/
-    text-align: left; /*right;*/
+    width: 90%;
+    text-align: left;
     margin: 0px !important;
 }
 #root div[tabindex="0"] > div:nth-child(3) {
@@ -28,19 +28,20 @@ div {
 .MuiButton-root:after {
     content: ""attr(aria-label);/*title*/
     text-align: right;/**/
-    line-height: 4; /* 行間を1.5倍に設定（調整が必要な場合は適宜変更） */
+    line-height: 4; /* 行間を4倍に設定（調整が必要な場合は適宜変更） */
+    font-family: var(--font-type);
 }
-/*add
-.css-1qd89n2,
-.css-nlkwmh
- {
-    display: none;
-}*/
 
 
 /* テキストカラー変更 */
 .MuiButton-textPrimary {
-    color: rgb(240,255,255);
+    color: var(--font-color-prime, rgb(240,255,255));
+}
+
+/********** パラメータ部分 **********/
+:root {
+    --font-color-prime:    rgb(240,255,255);
+    --font-type: sans-serif;
 }
 
 
