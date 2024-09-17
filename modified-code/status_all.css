@@ -1,0 +1,65 @@
+/*※拡大縮小はAltキー押しながら拡大縮小でトリミング*/
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/-obs.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/-scrollbar.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/balloon.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/board.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/boardBackground.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/chat.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/cutIn.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/edit.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/header.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/modal.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/monitoring.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/newDice.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/scaling.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/timer.css");
+@import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/volume.css");
+
+
+
+/* 特定のキャラだけ非表示（1からスタート）
+.sc-jmnVvD>div:nth-child(1) {
+  display: none;
+} */
+
+
+/* 横並び（200の倍数） */
+/*
+.sc-jmnVvD>div>div>div {
+  max-width: 600px;
+}
+*/
+
+:root {
+  --dice-display: none;
+}
+
+
+
+
+
+
+/*******************************************************
+MIT License
+
+Copyright (c) 2023 aoko*
+Copyright (c) 2021 紅坂柚月
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*******************************************************/
