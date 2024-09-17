@@ -2,3 +2,89 @@
 hr {
   display: none;
 }
+
+
+/********** パラメータ部分 **********/
+:root {
+    --background-color: rgba(170, 222, 242, 0.8);
+    /*--text-title: none;*/
+    /*--font-type: serif;*/
+    /*--font-color: rgb(65, 65, 65);字の色*//
+    --font-color-fail:    rgb(220, 0, 78);     /*rgb(220, 0, 78)*/
+    --font-color-success: rgb(33, 150, 243); /*rgb(33, 150, 243)*/
+}
+
+/*:root {
+    --background-color: rgb(0, 0, 0);
+    --background-padding: 8px 8px 8px 8px;
+    --border-color: rgb(255, 255, 255);
+    --border-image: url();
+    --border-width: 2px;
+    --border-radius: 0px;
+    --border-shadow: 0;
+    --font-color: rgb(255, 255, 255);
+    --font-color-shadow: 0;
+    --font-color-fail: rgb(245, 0, 87);
+    --font-color-fail-shadow: 0;
+    --font-color-success: rgb(33, 150, 243);
+    --font-color-success-shadow: 0;
+    --font-size: 1.5rem;
+    --font-shadow: 0;
+    --image-radius: 0%;
+    --width: 500px;
+    --line-clamp: 30;
+  }*/
+
+
+
+  /* パステルカラー */
+  :root {
+    --background-color: rgba(255, 254, 236, 0);
+    --border-color: rgb(10, 93, 213);
+    --border-width: 4px;
+    --border-radius: 0px;
+    --font-color: rgb(61, 218, 215);
+    --font-color-fail: rgb(228, 80, 143);
+    --font-color-success: rgb(85, 111, 181);
+  }
+/*#edfafd
+#afd9da
+#3ddad7
+#2a93d5
+#135589*/
+  
+  /*フェードイン*/
+  
+  .MuiListItem-gutters {
+    animation-name: fadeRightToLeft;
+    animation-duration: 20s;
+    animation-fill-mode: forwards;
+  }
+  
+@keyframes fadeRightToLeft {
+  0% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 0.99;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+
+
+}
+
+/*現在動作せず、いずれアプデしたい。*/
+.MuiList-root>div:nth-child(1)>div>div>div:nth-last-child(-n+1) {
+    display: block !important;
+}
+
+
