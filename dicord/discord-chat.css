@@ -1,0 +1,68 @@
+body, #root, #root * {
+  overflow-y: hidden !important;
+}
+[class*="Chat_chatContainer__"] {
+  width: 100%; 
+  height: 100%; 
+  overflow: hidden;
+} 
+[class*="Chat_channelName__"] {
+  display: none;
+}  
+[class*="Chat_messages__"] {
+  width: 100%; 
+  background-color: transparent !important; 
+  height: 100%; 
+  display: flex; 
+  flex-direction: column !important; 
+  justify-content: flex-start; 
+  overflow: hidden;
+} 
+[class*="Chat_message__"] {
+  width: 100% !important; 
+  display: flex; 
+  flex-direction: row; 
+  align-items: flex-start; 
+  overflow: visible; 
+  max-height: 80vh;
+} 
+[class*="Chat_timestamp__"] {
+  width: 80px; 
+  overflow: visible; 
+  margin-right: -84px;
+} 
+[class*="Chat_username__"] {
+  margin: 24px 0 0 0; 
+  width: 80px; 
+  display: initial;
+} 
+[class*="Chat_messageText__"] {
+  width: calc(100% - 144px) !important; 
+  background: #FFF; 
+  color: rgb(255, 255, 255) !important; 
+  display: block; 
+  padding: 16px; 
+  border-radius: 16px; 
+  background-color: rgba(89, 212, 220, 0.57); 
+  line-height: initial; 
+  font-size: 11px;
+} 
+[class*="Chat_messageText__"]::before {
+  position: absolute; 
+  display: inline-block; 
+  content: ""; 
+  width: 32px; 
+  height: 32px; 
+  background: linear-gradient(143deg, transparent 65%, rgba(89, 212, 220, 0.57) 65%, rgba(89, 212, 220, 0.57) 100%); 
+  margin: -8px 0px 0px -36px; 
+  transform: rotateZ(8deg); 
+  z-index: 0;
+} 
+[class*="Chat_messageHidden__"] {
+  max-height: 0px; 
+  padding-bottom: 0px; 
+  opacity: 0;
+} 
+[class*="Chat_messageText__"]::after {
+  background: linear-gradient(-37deg, transparent 65%, rgba(89, 212, 220, 0.57) 65%, rgba(89, 212, 220, 0.57) 100%);
+}
