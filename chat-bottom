@@ -1,0 +1,21 @@
+/* ===== 下寄せ ===== */
+/* 高さの伝播 */
+html, body, #root { height: 100%; }
+.MuiDrawer-root, .MuiDrawer-paper { height: 100%; }
+.MuiDrawer-paper { display: flex; flex-direction: column; }
+.MuiDrawer-paper > header { flex: 0 0 auto; }
+.MuiDrawer-paper > .MuiList-root { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+/* ★ 下寄せ本体（translateY は壊さない版） */
+.MuiList-root > div[style*="position: relative"] {
+  min-height: 100%;             /* ビューポートより短いときは伸びる */
+}
+
+.MuiList-root > div[style*="position: relative"]
+  > div[style*="position: absolute"] {
+  /* ここでは position / top/bottom/transform に触れない！ */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;     /* 下寄せの肝 */
+  min-height: 100%;              /* 内容より短いときは下に寄せる余白を作る */
+}
