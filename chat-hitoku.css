@@ -71,7 +71,7 @@ hr {
     transform: translateY(0px);
   }
   80% {
-    opacity: 0.99;
+    opacity: 1;
     transform: translateY(0px);
   }
   100% {
