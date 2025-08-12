@@ -1,3 +1,31 @@
+@import url("https://aoko2477.github.io/ccfolia-css/chat-hitoku.css");
+
+/* フェードイン＆フェードアウト（下から出て下へ消える） */
+.MuiListItem-gutters {
+  animation-name: fadeBottomInOut;
+  animation-duration: 20s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeBottomInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(150px); /* 下からスタート */
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);     /* フェードイン完了 */
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);     /* 表示維持 */
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(150px); /* 下へ戻ってフェードアウト */
+  }
+}
+
 /* ===== 下寄せ ===== */
 /* 高さの伝播 */
 html, body, #root { height: 100%; }
