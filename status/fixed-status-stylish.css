@@ -1,0 +1,102 @@
+@import url("https://aoko2477.github.io/ccfolia-css/status/fixed-status.css");
+
+/* —— 必要最小限のカスタム変数 —— */
+:root {
+  --status-number: 100px;/*ここで横並びの数制御。ステータスの横幅と関連*/
+  --status-width:   80px;/*ステータスの横幅制御：デフォルト96px*/
+
+  --gauge-height: 3px;
+  --gauge-radius: 2px;
+  --gauge-color: #6a6a6a;                 /* フィル（モノトーン） */
+  --gauge-track: rgba(255,255,255,0.18);  /* トラック：暗背景でも見える明度 */
+  --gauge-border: rgba(255,255,255,0.28); /* トラック外周の輪郭 */
+  --label-color: #f5f5f5;                 /* ラベル文字色（暗背景想定） */
+}
+
+/* —— 行配置：下寄せ＋行間ややタイト —— */
+[variant="bar"] > div {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 0 4px;
+}
+
+/* —— ラベル文字（HP/MP/SAN/CT） —— */
+[variant="bar"] p.MuiTypography-root {
+  color: var(--label-color);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0;
+  line-height: 1.05;
+  text-shadow:
+    0 1px 2px rgba(0,0,0,0.7),
+    0 0 3px rgba(0,0,0,0.4);
+}
+[variant="bar"] > div > div:first-child { margin-bottom: 2px; }
+
+/* —— ゲージ（下寄せ・極細3px・重ね描画） —— */
+[variant="bar"] > div > div:last-child {
+  position: relative;
+  margin-top: auto;
+  height: var(--gauge-height) !important;
+  border-radius: var(--gauge-radius);
+  overflow: hidden;
+}
+[variant="bar"] > div > div:last-child > div:first-child {
+  position: absolute; inset: 0;
+  background: var(--gauge-track) !important;
+  border-radius: inherit;
+  outline: 1px solid var(--gauge-border);
+}
+[variant="bar"] > div > div:last-child > div:last-child {
+  position: absolute; inset: 0 auto 0 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gauge-color) !important;  /* フォールバック（単色） */
+  min-width: 1px;
+}
+@supports (background: color-mix(in oklab, white, black)) {
+  [variant="bar"] > div > div:last-child > div:last-child {
+    background:
+      linear-gradient(to bottom,
+        color-mix(in oklab, var(--gauge-color) 96%, white 4%),
+        color-mix(in oklab, var(--gauge-color) 100%, black 10%)
+      ) !important;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [variant="bar"] > div > div:last-child > div:last-child {
+    transition: width .2s ease;
+  }
+}
+
+/* —— イニシアチブ（18）のバッジ：左上・控えめ配色 —— */
+.MuiBadge-root > .MuiAvatar-root + .MuiBadge-badge {
+  right: auto !important;
+  left: 0 !important;
+  top: 0 !important;
+  transform: translate(-30%, -30%) !important;
+  background-color: rgba(0,0,0,0.5) !important; /* 半透明ダーク */
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   予備：現在未使用のカスタム変数（必要なら解除）
+========================================= */
+/*
+:root {
+  --status-number: 100px;            // ステータス横並びの数制御
+  --status-width: 80px;              // ステータスの横幅制御
+  --font-color-status: rgb(66,66,66); // HP等のフォントカラー
+  --font-size-status: 0.875rem;      // HP等のフォントサイズ
+  --font-family-all: "Roboto","Helvetica","Arial",sans-serif; // 全体のフォント
+  --status-background-color: transparent; // ステ背景色
+  --status-gauge-color: rgb(245,245,245);  // ゲージ色
+  --initiative-font-color: rgb(66,66,66);  // イニシアチブ数字色
+  --initiative-background-color: rgb(245,245,245); // イニシアチブ背景色
+  --character-background-color: transparent; // キャラアイコン背景色
+}
+*/
