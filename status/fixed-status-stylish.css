@@ -1,26 +1,35 @@
 @import url("https://aoko2477.github.io/ccfolia-css/status/fixed-status.css");
 
-/* —— 必要最小限のカスタム変数 —— */
+/* ===== 必要最小限の変数（レイアウト＋見た目） ===== */
 :root {
-  --status-number: 100px;/*ここで横並びの数制御。ステータスの横幅と関連*/
-  --status-width:   80px;/*ステータスの横幅制御：デフォルト96px*/
+  /* レイアウト */
+  --status-columns: 1;   /* ← デフォルト1列 */
+  --status-width: 80px;  /* ← デフォルト幅 */
+  --status-gap: 2px;
 
+  /* ゲージ/色 */
   --gauge-height: 3px;
   --gauge-radius: 2px;
-  --gauge-color: #6a6a6a;                 /* フィル（モノトーン） */
-  --gauge-track: rgba(255,255,255,0.18);  /* トラック：暗背景でも見える明度 */
-  --gauge-border: rgba(255,255,255,0.28); /* トラック外周の輪郭 */
-  --label-color: #f5f5f5;                 /* ラベル文字色（暗背景想定） */
+  --gauge-color: #6a6a6a;                 /* モノトーン */
+  --gauge-track: rgba(255,255,255,0.18);  /* 暗背景でも見える */
+  --gauge-border: rgba(255,255,255,0.28); /* トラックの輪郭 */
+  --label-color: #f5f5f5;                 /* ラベル色（暗背景想定） */
 }
 
-/* —— 行配置：下寄せ＋行間ややタイト —— */
+/* ===== ステータスの並び（整数列×固定幅） ===== */
+[variant="bar"] {
+  display: grid !important;
+  grid-template-columns: repeat(var(--status-columns), var(--status-width));
+  gap: var(--status-gap);
+}
 [variant="bar"] > div {
+  width: var(--status-width);
   display: flex;
   flex-direction: column;
-  padding: 14px 0 4px;
+  padding: 14px 0 4px;   /* 行間はお好みで */
 }
 
-/* —— ラベル文字（HP/MP/SAN/CT） —— */
+/* ===== ラベル（HP/MP/SAN/CT） ===== */
 [variant="bar"] p.MuiTypography-root {
   color: var(--label-color);
   font-weight: 600;
@@ -31,12 +40,13 @@
     0 1px 2px rgba(0,0,0,0.7),
     0 0 3px rgba(0,0,0,0.4);
 }
+/* ラベル直下の間隔（バーと被らない微スペース） */
 [variant="bar"] > div > div:first-child { margin-bottom: 2px; }
 
-/* —— ゲージ（下寄せ・極細3px・重ね描画） —— */
+/* ===== 極細3pxゲージ：下寄せ・重ね描画 ===== */
 [variant="bar"] > div > div:last-child {
   position: relative;
-  margin-top: auto;
+  margin-top: auto;                   /* 下寄せ */
   height: var(--gauge-height) !important;
   border-radius: var(--gauge-radius);
   overflow: hidden;
@@ -51,7 +61,7 @@
   position: absolute; inset: 0 auto 0 0;
   height: 100%;
   border-radius: inherit;
-  background: var(--gauge-color) !important;  /* フォールバック（単色） */
+  background: var(--gauge-color) !important;  /* フォールバック単色 */
   min-width: 1px;
 }
 @supports (background: color-mix(in oklab, white, black)) {
@@ -64,12 +74,10 @@
   }
 }
 @media (prefers-reduced-motion: no-preference) {
-  [variant="bar"] > div > div:last-child > div:last-child {
-    transition: width .2s ease;
-  }
+  [variant="bar"] > div > div:last-child > div:last-child { transition: width .2s ease; }
 }
 
-/* —— イニシアチブ（18）のバッジ：左上・控えめ配色 —— */
+/* ===== イニシアチブ（バッジ）左上＆控えめ ===== */
 .MuiBadge-root > .MuiAvatar-root + .MuiBadge-badge {
   right: auto !important;
   left: 0 !important;
@@ -84,19 +92,18 @@
 }
 
 /* =========================================
-   予備：現在未使用のカスタム変数（必要なら解除）
+   予備：現在未使用の変数（必要なら解除）
 ========================================= */
 /*
 :root {
-  --status-number: 100px;            // ステータス横並びの数制御
-  --status-width: 80px;              // ステータスの横幅制御
-  --font-color-status: rgb(66,66,66); // HP等のフォントカラー
-  --font-size-status: 0.875rem;      // HP等のフォントサイズ
-  --font-family-all: "Roboto","Helvetica","Arial",sans-serif; // 全体のフォント
-  --status-background-color: transparent; // ステ背景色
-  --status-gauge-color: rgb(245,245,245);  // ゲージ色
-  --initiative-font-color: rgb(66,66,66);  // イニシアチブ数字色
-  --initiative-background-color: rgb(245,245,245); // イニシアチブ背景色
-  --character-background-color: transparent; // キャラアイコン背景色
+  --status-number: 100px;               // 旧：横並び数を幅でごまかす用
+  --font-color-status: rgb(66,66,66);   // 旧：HP等フォント色
+  --font-size-status: 0.875rem;         // 旧：HP等フォントサイズ
+  --font-family-all: "Roboto","Helvetica","Arial",sans-serif; // 旧：全体フォント
+  --status-background-color: transparent; // 旧：ステ背景色
+  --status-gauge-color: rgb(245,245,245);  // 旧：ゲージ色
+  --initiative-font-color: rgb(66,66,66);  // 旧：バッジ文字色
+  --initiative-background-color: rgb(245,245,245); // 旧：バッジ背景
+  --character-background-color: transparent; // 旧：アイコン背景
 }
 */
