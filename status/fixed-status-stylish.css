@@ -3,8 +3,14 @@
 /* ===== 必要最小限の変数（レイアウト＋見た目） ===== */
 :root {
   /* レイアウト */
-  --status-columns: 1;   /* ← デフォルト1列 */
-  --status-width: 80px;  /* ← デフォルト幅 */
+  --status-columns: 1;   /* デフォルト1列 */
+  --status-width: 80px;  /* デフォルト幅 */
+
+  /* ステータスの行列の隙間を独立で制御 */
+  --status-gap-x: 6px;   /* 横のすき間（column-gap） */
+  --status-gap-y: 0px;   /* 縦のすき間（row-gap） */
+
+  /* 互換用（未設定時のフォールバック※旧仕様維持の場合、x,yにunsetを使用してください） */
   --status-gap: 2px;
 
   /* ゲージ/色 */
@@ -20,13 +26,18 @@
 [variant="bar"] {
   display: grid !important;
   grid-template-columns: repeat(var(--status-columns), var(--status-width));
-  gap: var(--status-gap);
+
+  /* gap: <row-gap> <column-gap> の順 */
+  gap:
+    var(--status-gap-y, var(--status-gap, 0px))
+    var(--status-gap-x, var(--status-gap, 0px));
 }
+
 [variant="bar"] > div {
   width: var(--status-width);
   display: flex;
   flex-direction: column;
-  padding: 14px 0 4px;   /* 行間はお好みで */
+  padding: 14px 0 4px;
 }
 
 /* ===== ラベル（HP/MP/SAN/CT） ===== */
