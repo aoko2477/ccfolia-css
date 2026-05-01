@@ -1,6 +1,9 @@
 /* --- HPバー(一つ目のステータス)の色変更 --- */
 :root {
-  --hp-color: #2ecc71;      /* 緑（通常時の色）※status-all-stylish.cssのデフォルトに合わせる場合は #6a6a6a に変更 */
+  /* --hp-color: #2ecc71; */
+   /*通常時の色（任意、上記は緑）
+   ※未設定の場合はベースCSS（status-all-stylish.css）またはデフォルト色（rgb(245, 245, 245)）を使用
+   ※見た目を統一したい場合は #6a6a6a（stylishの標準色）に合わせると自然 */
   --hp-mid-color: #f1c40f;  /* 黄（約50%以下） */
   --hp-low-color: #e74c3c;  /* 赤（約20%以下） */
 
@@ -97,7 +100,7 @@
 /* ===== HP色分け（python生成） ===== */
 
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child {
-  background: var(--hp-color, var(--gauge-color)) !important;
+  background: var(--hp-color, var(--gauge-color, rgb(245, 245, 245))) !important;
 }
 
 /* 黄（20.xx〜49.xx + 21〜49 + 50%） */
@@ -218,5 +221,5 @@
 
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 50."],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 100%;"] {
-  background: var(--hp-color, var(--gauge-color)) !important;
+  background: var(--hp-color, var(--gauge-color, rgb(245, 245, 245))) !important;
 }
