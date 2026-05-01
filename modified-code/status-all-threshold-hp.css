@@ -1,0 +1,101 @@
+/* ===== HP色分け（自動生成） ===== */
+
+/* デフォルト（緑） */
+
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child {
+  background: var(--hp-color, var(--gauge-color)) !important;
+}
+
+/* 黄（20.xx〜49.xx + 50%） */
+
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 20."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 21."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 22."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 23."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 24."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 25."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 26."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 27."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 28."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 29."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 30."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 31."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 32."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 33."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 34."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 35."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 36."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 37."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 38."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 39."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 40."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 41."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 42."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 43."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 44."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 45."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 46."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 47."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 48."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 49."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 50%;"] {
+  background: var(--hp-mid-color, #f1c40f) !important;
+}
+
+/* 赤（0〜19.xx + 20%） */
+
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 0%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 0."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 1%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 1."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 2%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 2."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 3%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 3."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 4%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 4."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 5%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 5."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 6%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 6."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 7%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 7."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 8%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 8."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 9%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 9."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 10%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 10."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 11%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 11."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 12%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 12."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 13%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 13."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 14%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 14."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 15%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 15."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 16%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 16."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 17%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 17."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 18%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 18."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 19%;"],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 19."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 20%;"] {
+  background: var(--hp-low-color, #e74c3c) !important;
+}
+
+/* 50.xx を緑に戻す */
+
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 50."] {
+  background: var(--hp-color, var(--gauge-color)) !important;
+}
+
+/* 100%誤爆対策 */
+
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 100%;"] {
+  background: var(--hp-color, var(--gauge-color)) !important;
+}
