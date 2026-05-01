@@ -1,42 +1,165 @@
-/* ===== HP色分け（自動生成） ===== */
+/* --- HPバー(一つ目のステータス)の色変更 --- */
+:root {
+  --hp-color: #2ecc71;      /* 緑（通常時の色）※status-all-stylish.cssのデフォルトに合わせる場合は #6a6a6a に変更 */
+  --hp-mid-color: #f1c40f;  /* 黄（約50%以下） */
+  --hp-low-color: #e74c3c;  /* 赤（約20%以下） */
 
-/* デフォルト（緑） */
+  /* --- HP低下時の演出 --- */
+  --hp-alert-mode: none;
+  --hp-alert-delay: 0.2s;
+
+  /*
+  候補：
+  none                          → 点滅なし
+  hp-alert 0.6s ease-out 2      → 短く2回点滅（軽い警告）
+  hp-blink 1s linear infinite   → 一定リズムで点滅（シンプル）
+  hp-heartbeat 1.6s ease-in-out infinite
+    → 心拍のような拍動（ドクン・ドクン…と2段階＋間あり、自然な警告）
+  hp-heartbeat-strong 1.4s ease-in-out infinite
+    → 強い心拍（縮み＋発光＋明滅を伴う瀕死演出、やや派手）
+  */
+}
+
+
+/* ===== アニメーション定義 ===== */
+
+/* 短く2回点滅（軽い警告） */
+@keyframes hp-alert {
+  0%   { opacity: 1; box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+  30%  { opacity: 0.4; box-shadow: 0 0 8px rgba(231,76,60,0.9); }
+  60%  { opacity: 1; box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+  100% { opacity: 1; box-shadow: none; }
+}
+
+/* 一定リズムで点滅（シンプル） */
+@keyframes hp-blink {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* 心拍のような拍動 */
+@keyframes hp-heartbeat {
+  0%   { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+  10%  { transform: scale(1.15); box-shadow: 0 0 10px rgba(231,76,60,1); }
+  20%  { transform: scale(1); }
+  30%  { transform: scale(1.15); box-shadow: 0 0 8px rgba(231,76,60,0.8); }
+  40%  { transform: scale(1); }
+  100% { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+}
+/* 強い心拍 */
+@keyframes hp-heartbeat-strong {
+  0%   { 
+    transform: scale(1);
+    box-shadow: 0 0 2px rgba(231,76,60,0.4);
+    filter: brightness(1);
+  }
+
+  8%   { 
+    transform: scale(0.92); /* 軽く縮む */
+    box-shadow: 0 0 1px rgba(231,76,60,0.3);
+    filter: brightness(0.9);
+  }
+
+  16%  { 
+    transform: scale(1.18); /* ドクン */
+    box-shadow: 0 0 12px rgba(231,76,60,1);
+    filter: brightness(1.2);
+  }
+
+  24%  { 
+    transform: scale(0.96); /* 反動 */
+    box-shadow: 0 0 4px rgba(231,76,60,0.6);
+    filter: brightness(1);
+  }
+
+  32%  { 
+    transform: scale(1.12); /* ドクン2 */
+    box-shadow: 0 0 8px rgba(231,76,60,0.8);
+    filter: brightness(1.15);
+  }
+
+  40%  { 
+    transform: scale(1);
+    box-shadow: 0 0 2px rgba(231,76,60,0.4);
+    filter: brightness(1);
+  }
+
+  100% { 
+    transform: scale(1); /* 余白 */
+    box-shadow: 0 0 2px rgba(231,76,60,0.4);
+    filter: brightness(1);
+  }
+}
+
+
+
+/* ===== HP色分け（python生成） ===== */
 
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child {
   background: var(--hp-color, var(--gauge-color)) !important;
 }
 
-/* 黄（20.xx〜49.xx + 50%） */
+/* 黄（20.xx〜49.xx + 21〜49 + 50%） */
 
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 20."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 21%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 21."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 22%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 22."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 23%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 23."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 24%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 24."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 25%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 25."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 26%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 26."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 27%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 27."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 28%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 28."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 29%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 29."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 30%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 30."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 31%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 31."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 32%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 32."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 33%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 33."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 34%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 34."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 35%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 35."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 36%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 36."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 37%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 37."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 38%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 38."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 39%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 39."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 40%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 40."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 41%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 41."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 42%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 42."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 43%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 43."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 44%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 44."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 45%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 45."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 46%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 46."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 47%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 47."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 48%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 48."],
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 49%;"],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 49."],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 50%;"] {
   background: var(--hp-mid-color, #f1c40f) !important;
@@ -86,16 +209,14 @@
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 19."],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 20%;"] {
   background: var(--hp-low-color, #e74c3c) !important;
+  animation: var(--hp-alert-mode, none);
+  animation-delay: var(--hp-alert-delay, 0.2s);
+
 }
 
-/* 50.xx を緑に戻す */
+/* 緑補正（50.xx + 100%） */
 
-.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 50."] {
-  background: var(--hp-color, var(--gauge-color)) !important;
-}
-
-/* 100%誤爆対策 */
-
+.MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style^="width: 50."],
 .MuiBadge-root + div > div > div:nth-child(1) > div:last-child > div:last-child[style="width: 100%;"] {
   background: var(--hp-color, var(--gauge-color)) !important;
 }
