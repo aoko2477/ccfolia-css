@@ -1,0 +1,134 @@
+/*※拡大縮小はAltキー押しながら拡大縮小でトリミング*/
+@import url("https://aoko2477.github.io/ccfolia-css/modified-code/status_all.css");
+
+/* ===== ステータス表示の基本設定 ===== */
+:root {
+  /* --- レイアウト --- */
+  --status-columns: 4;   /* 列数（例：3にすると3列表示） */
+  --status-width: 80px;  /* 各ステータスの横幅 */
+  /* ステータス同士の間隔 */
+  --status-gap-x: 6px;   /* 横の間隔（列の間） */
+  --status-gap-y: 0px;   /* 縦の間隔（行の間） */
+  /* --- ゲージ（HPバーなど） --- */
+  --gauge-height: 3px;   /* バーの高さ */
+  --gauge-radius: 2px;   /* 角丸 */
+  --gauge-color: #6a6a6a;                /* バー本体の色 */
+  --gauge-track: rgba(255,255,255,0.18);/* 背景（残量0の部分） */
+  --gauge-border: rgba(255,255,255,0.28);
+  /* --- ラベル（HP/MPなどの文字） --- */
+  --label-color: #f5f5f5; /* 文字色（暗背景向け） */
+}
+
+/* キャラ一覧の1行：
+   MuiBadge-rootの次に来るdivをステータス領域として扱う */
+.MuiBadge-root + div {
+  flex: 0 0 calc(
+    var(--status-columns) * var(--status-width)
+    + (var(--status-columns) - 1) * var(--status-gap-x)
+  ) !important;
+
+  width: calc(
+    var(--status-columns) * var(--status-width)
+    + (var(--status-columns) - 1) * var(--status-gap-x)
+  ) !important;
+
+  max-width: calc(
+    var(--status-columns) * var(--status-width)
+    + (var(--status-columns) - 1) * var(--status-gap-x)
+  ) !important;
+
+  margin-left: 4px !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+
+/* ステータス一覧：
+   MuiBadge-root + div の直下の div をグリッド化 */
+.MuiBadge-root + div > div {
+  display: grid !important;
+  grid-template-columns: repeat(var(--status-columns), var(--status-width)) !important;
+  column-gap: var(--status-gap-x) !important;
+  row-gap: var(--status-gap-y) !important;
+
+  width: calc(
+    var(--status-columns) * var(--status-width)
+    + (var(--status-columns) - 1) * var(--status-gap-x)
+  ) !important;
+
+  max-width: none !important;
+  box-sizing: border-box;
+}
+
+/* 各ステータス */
+.MuiBadge-root + div > div > div {
+  width: var(--status-width) !important;
+  max-width: var(--status-width) !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+  padding: 14px 0 4px !important;
+}
+
+/* ラベル行：各ステータス内の先頭div想定 */
+.MuiBadge-root + div > div > div > div:first-child {
+  margin-bottom: 2px !important;
+}
+
+/* ラベル文字 */
+.MuiBadge-root + div > div > div > div:first-child p.MuiTypography-root {
+  color: var(--label-color) !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0 !important;
+  line-height: 1.05;
+  text-shadow:
+    0 1px 2px rgba(0,0,0,0.7),
+    0 0 3px rgba(0,0,0,0.4);
+}
+
+/* ゲージ：各ステータス内の最後のdiv想定 */
+.MuiBadge-root + div > div > div > div:last-child {
+  position: relative;
+  height: var(--gauge-height) !important;
+  border-radius: var(--gauge-radius);
+  overflow: hidden;
+}
+
+/* ゲージ背景 */
+.MuiBadge-root + div > div > div > div:last-child > div:first-child {
+  position: absolute;
+  inset: 0;
+  background: var(--gauge-track) !important;
+  border-radius: inherit;
+  outline: 1px solid var(--gauge-border);
+}
+
+/* ゲージ本体 */
+.MuiBadge-root + div > div > div > div:last-child > div:last-child {
+  position: absolute;
+  inset: 0 auto 0 0;
+  height: 100%;
+  min-width: 1px;
+  border-radius: inherit;
+  background: var(--gauge-color) !important;
+  transition: width .2s ease;
+}
+
+/* ===== イニシアチブ（バッジ）左上＆控えめ ===== */
+.MuiBadge-root > .MuiAvatar-root + .MuiBadge-badge {
+  right: auto !important;
+  left: 0 !important;
+  top: 0 !important;
+  transform: translate(-30%, -30%) !important;
+  background-color: rgba(0,0,0,0.5) !important; /* 半透明ダーク */
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+
+/* キャラ一覧の1番目を非表示 (汎用化検討中)
+.sc-hRUGMy.kxIUFo > div:nth-child(1) {
+  display: none !important;
+} */
