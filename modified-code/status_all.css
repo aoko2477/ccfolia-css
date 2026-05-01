@@ -15,30 +15,6 @@
 @import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/timer.css");
 @import url("https://yudukiak.github.io/ccfoliaCSS/CSS/asset/volume.css");
 
-
-
-/* 特定のキャラだけ非表示（1からスタート）
-.sc-jmnVvD>div:nth-child(1) {
-  display: none;
-} */
-
-
-/* 横並び（200の倍数） */
-/*
-.sc-jmnVvD>div>div>div {
-  max-width: 600px;
-}
-*/
-
-:root {
-  --dice-display: none;
-}
-
-
-
-
-
-
 /*******************************************************
 MIT License
 
