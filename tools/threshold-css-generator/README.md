@@ -8,6 +8,10 @@ https://aoko2477.github.io/ccfolia-css/tools/threshold-css-generator/
 
 ## 機能
 
+- 表示形式
+  - キャラクター一覧（`status-all`）
+  - 指定キャラクターのステータス表示（`fixed-status`）
+- 標準・StylishベースCSSの読み込み
 - 適用対象
   - すべてのステータス
   - 1つのステータス
@@ -18,6 +22,8 @@ https://aoko2477.github.io/ccfolia-css/tools/threshold-css-generator/
 - CSSのコピー
 - CSSファイル保存
 - 簡易プレビュー
+
+`fixed-status` では通常色を指定しない限り、ベースCSS側の色やグラデーションを維持します。
 
 ## 配置
 

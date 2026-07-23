@@ -2,7 +2,10 @@
   "use strict";
 
   const els = {
+    pageTypeOptions: [...document.querySelectorAll('input[name="pageType"]')],
     baseCssOptions: [...document.querySelectorAll('input[name="baseCss"]')],
+    standardBaseDescription: document.querySelector("#standardBaseDescription"),
+    stylishBaseDescription: document.querySelector("#stylishBaseDescription"),
     targetModes: [...document.querySelectorAll('input[name="targetMode"]')],
     singleIndex: document.querySelector("#singleIndex"),
     multipleIndexes: document.querySelector("#multipleIndexes"),
@@ -34,6 +37,7 @@
   };
 
   const defaults = {
+    pageType: "status-all",
     baseCss: "stylish",
     targetMode: "single",
     singleIndex: 1,
@@ -56,10 +60,32 @@
     "heartbeat-strong": "status-threshold-heartbeat-strong 1.4s ease-in-out infinite",
   };
 
-  const baseCssUrls = {
-    standard: "https://aoko2477.github.io/ccfolia-css/modified-code/status-all.css",
-    stylish: "https://aoko2477.github.io/ccfolia-css/modified-code/status-all-stylish.css",
+  const baseCssPresets = {
+    "status-all": {
+      standard: {
+        filename: "status-all.css",
+        url: "https://aoko2477.github.io/ccfolia-css/modified-code/status-all.css",
+      },
+      stylish: {
+        filename: "status-all-stylish.css",
+        url: "https://aoko2477.github.io/ccfolia-css/modified-code/status-all-stylish.css",
+      },
+    },
+    "fixed-status": {
+      standard: {
+        filename: "fixed-status.css",
+        url: "https://aoko2477.github.io/ccfolia-css/status/fixed-status.css",
+      },
+      stylish: {
+        filename: "fixed-status-stylish.css",
+        url: "https://aoko2477.github.io/ccfolia-css/status/fixed-status-stylish.css",
+      },
+    },
   };
+
+  function getPageType() {
+    return els.pageTypeOptions.find((radio) => radio.checked)?.value ?? "status-all";
+  }
 
   function getBaseCss() {
     return els.baseCssOptions.find((radio) => radio.checked)?.value ?? "stylish";
@@ -67,6 +93,21 @@
 
   function getTargetMode() {
     return els.targetModes.find((radio) => radio.checked)?.value ?? "single";
+  }
+
+  function pageTypeDescription(pageType) {
+    return pageType === "fixed-status"
+      ? "指定キャラクターのステータス表示"
+      : "キャラクター一覧";
+  }
+
+  function updatePageType() {
+    const presets = baseCssPresets[getPageType()];
+    els.standardBaseDescription.textContent =
+      `${presets.standard.filename} を作成結果の先頭で読み込む`;
+    els.stylishBaseDescription.textContent =
+      `見た目を整えた ${presets.stylish.filename} を読み込む`;
+    updatePreview();
   }
 
   function updateTargetFields() {
@@ -175,6 +216,7 @@
     }
 
     return {
+      pageType: getPageType(),
       baseCss: getBaseCss(),
       targetMode,
       indexes,
@@ -190,7 +232,9 @@
   }
 
   function makeBases(settings) {
-    const prefix = ".MuiBadge-root + div > div";
+    const prefix = settings.pageType === "fixed-status"
+      ? '[variant="bar"]'
+      : ".MuiBadge-root + div > div";
 
     if (settings.targetMode === "all") {
       return [`${prefix} > div > div:last-child > div:last-child`];
@@ -297,7 +341,7 @@
     const normalFix = makeSelectors(bases, "normalFix", settings);
     const animationValue = animationValues[settings.animationMode];
 
-    const normalFallback = settings.useNormalColor
+    const normalBackground = settings.useNormalColor
       ? "var(--status-threshold-normal-color, var(--gauge-color, rgb(245, 245, 245)))"
       : "var(--gauge-color, rgb(245, 245, 245))";
 
@@ -321,9 +365,14 @@
       "}"
     );
 
-    const defaultBlock = renderBlock(bases, [
-      `background: ${normalFallback} !important;`,
-    ]);
+    const shouldWriteNormalBackground =
+      settings.pageType === "status-all" || settings.useNormalColor;
+
+    const defaultBlock = shouldWriteNormalBackground
+      ? renderBlock(bases, [
+          `background: ${normalBackground} !important;`,
+        ])
+      : null;
 
     const midBlock = renderBlock(mid, [
       `background: var(--status-threshold-mid-color, ${settings.midColor}) !important;`,
@@ -335,20 +384,24 @@
       `animation-delay: var(--status-threshold-alert-delay, ${settings.animationDelay}s);`,
     ]);
 
-    const normalFixBlock = renderBlock(normalFix, [
-      `background: ${normalFallback} !important;`,
-    ]);
+    const normalFixBlock = shouldWriteNormalBackground
+      ? renderBlock(normalFix, [
+          `background: ${normalBackground} !important;`,
+        ])
+      : null;
 
     const heading = `/*
 CCFOLIA ステータス閾値CSS
+表示形式：${pageTypeDescription(settings.pageType)}
 対象：${targetDescription(settings)}
 危険域：${settings.lowMax}%以下
 注意域：${settings.midMax}%以下
 作成元：https://aoko2477.github.io/ccfolia-css/tools/threshold-css-generator/
 */`;
 
-    const baseImport = baseCssUrls[settings.baseCss]
-      ? `@import url("${baseCssUrls[settings.baseCss]}");`
+    const basePreset = baseCssPresets[settings.pageType]?.[settings.baseCss];
+    const baseImport = basePreset
+      ? `@import url("${basePreset.url}");`
       : null;
 
     return [
@@ -358,18 +411,16 @@ CCFOLIA ステータス閾値CSS
       rootLines.join("\n"),
       "",
       animationKeyframes(),
-      "",
-      "/* ===== 通常色 ===== */",
-      defaultBlock,
+      ...(defaultBlock ? ["", "/* ===== 通常色 ===== */", defaultBlock] : []),
       "",
       `/* ===== 注意域（${settings.lowMax}%超〜${settings.midMax}%以下） ===== */`,
       midBlock,
       "",
       `/* ===== 危険域（${settings.lowMax}%以下） ===== */`,
       lowBlock,
-      "",
-      `/* ===== 通常色補正（${settings.midMax}%超） ===== */`,
-      normalFixBlock,
+      ...(normalFixBlock
+        ? ["", `/* ===== 通常色補正（${settings.midMax}%超） ===== */`, normalFixBlock]
+        : []),
       "",
     ].join("\n");
   }
@@ -393,7 +444,8 @@ CCFOLIA ステータス閾値CSS
       return;
     }
 
-    els.previewTarget.textContent = targetDescription(settings);
+    els.previewTarget.textContent =
+      `${pageTypeDescription(settings.pageType)}・${targetDescription(settings)}`;
     els.previewMid.style.width = `${settings.midMax}%`;
     els.previewLow.style.width = `${settings.lowMax}%`;
     els.previewMidLabel.textContent = `${settings.midMax} / 100`;
@@ -466,7 +518,7 @@ CCFOLIA ステータス閾値CSS
         ? "all"
         : settings.indexes.join("-");
 
-    const filename = `ccfolia-status-threshold-${target}.css`;
+    const filename = `ccfolia-${settings.pageType}-threshold-${target}.css`;
     const blob = new Blob([els.cssOutput.value], { type: "text/css;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -480,6 +532,10 @@ CCFOLIA ステータス閾値CSS
   }
 
   function reset() {
+    els.pageTypeOptions.forEach((radio) => {
+      radio.checked = radio.value === defaults.pageType;
+    });
+
     els.baseCssOptions.forEach((radio) => {
       radio.checked = radio.value === defaults.baseCss;
     });
@@ -509,9 +565,14 @@ CCFOLIA ステータス閾値CSS
     els.outputStatus.classList.remove("is-ready");
 
     clearError();
+    updatePageType();
     updateTargetFields();
     updatePreview();
   }
+
+  els.pageTypeOptions.forEach((radio) => {
+    radio.addEventListener("change", updatePageType);
+  });
 
   els.targetModes.forEach((radio) => {
     radio.addEventListener("change", updateTargetFields);
@@ -550,6 +611,7 @@ CCFOLIA ステータス閾値CSS
   els.copyButton.addEventListener("click", copyCss);
   els.downloadButton.addEventListener("click", downloadCss);
 
+  updatePageType();
   updateTargetFields();
   updatePreview();
 })();

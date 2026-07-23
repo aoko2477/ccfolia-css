@@ -1,0 +1,149 @@
+/* --- 全ステータスバーの割合による色変更 --- */
+:root {
+  /* --status-threshold-normal-color: #2ecc71; */
+  /* 通常色を未設定の場合は、fixed-status側の表示を維持します。 */
+  --status-threshold-mid-color: #f1c40f;
+  --status-threshold-low-color: #e74c3c;
+  --status-threshold-alert-mode: none;
+  --status-threshold-alert-delay: 0.2s;
+}
+
+
+@keyframes status-threshold-alert {
+  0% { opacity: 1; box-shadow: 0 0 2px rgba(231,76,60,.4); }
+  30% { opacity: .4; box-shadow: 0 0 8px rgba(231,76,60,.9); }
+  60% { opacity: 1; box-shadow: 0 0 2px rgba(231,76,60,.4); }
+  100% { opacity: 1; box-shadow: none; }
+}
+@keyframes status-threshold-blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+@keyframes status-threshold-heartbeat {
+  0%,20%,40%,100% { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,.4); }
+  10% { transform: scale(1.15); box-shadow: 0 0 10px rgba(231,76,60,1); }
+  30% { transform: scale(1.15); box-shadow: 0 0 8px rgba(231,76,60,.8); }
+}
+@keyframes status-threshold-heartbeat-strong {
+  0%,40%,100% { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,.4); filter: brightness(1); }
+  8% { transform: scale(.92); box-shadow: 0 0 1px rgba(231,76,60,.3); filter: brightness(.9); }
+  16% { transform: scale(1.18); box-shadow: 0 0 12px rgba(231,76,60,1); filter: brightness(1.2); }
+  24% { transform: scale(.96); box-shadow: 0 0 4px rgba(231,76,60,.6); filter: brightness(1); }
+  32% { transform: scale(1.12); box-shadow: 0 0 8px rgba(231,76,60,.8); filter: brightness(1.15); }
+}
+
+/* 通常色を明示した場合だけ上書き */
+[variant="bar"] > div > div:last-child > div:last-child {
+  background: var(--status-threshold-normal-color) !important;
+}
+
+/* 黄（20.xx〜49.xx + 21〜49 + 50%） */
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 20."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 21%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 21."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 22%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 22."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 23%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 23."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 24%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 24."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 25%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 25."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 26%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 26."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 27%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 27."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 28%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 28."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 29%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 29."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 30%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 30."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 31%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 31."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 32%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 32."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 33%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 33."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 34%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 34."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 35%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 35."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 36%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 36."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 37%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 37."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 38%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 38."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 39%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 39."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 40%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 40."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 41%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 41."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 42%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 42."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 43%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 43."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 44%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 44."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 45%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 45."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 46%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 46."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 47%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 47."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 48%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 48."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 49%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 49."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 50%;"] {
+  background: var(--status-threshold-mid-color, #f1c40f) !important;
+}
+
+/* 赤（0〜19.xx + 20%） */
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 0%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 0."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 1%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 1."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 2%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 2."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 3%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 3."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 4%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 4."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 5%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 5."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 6%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 6."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 7%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 7."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 8%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 8."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 9%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 9."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 10%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 10."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 11%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 11."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 12%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 12."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 13%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 13."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 14%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 14."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 15%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 15."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 16%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 16."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 17%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 17."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 18%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 18."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 19%;"],
+[variant="bar"] > div > div:last-child > div:last-child[style^="width: 19."],
+[variant="bar"] > div > div:last-child > div:last-child[style="width: 20%;"] {
+  background: var(--status-threshold-low-color, #e74c3c) !important;
+  animation: var(--status-threshold-alert-mode, none);
+  animation-delay: var(--status-threshold-alert-delay, 0.2s);
+}
