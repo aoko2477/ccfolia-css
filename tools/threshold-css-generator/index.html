@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CCFOLIA ステータス閾値CSSジェネレーター</title>
-  <meta name="description" content="CCFOLIAのステータスゲージを、対象・閾値・色・アニメーションを選んでCSS生成するツールです。">
+  <title>CCFOLIA ステータス閾値CSS作成ツール</title>
+  <meta name="description" content="CCFOLIAのステータスゲージを、対象・閾値・色・アニメーションを選んでCSSを作成するツールです。">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <main class="page-shell">
     <header class="hero">
       <div>
-        <p class="eyebrow">CCFOLIA CSS TOOL</p>
-        <h1>ステータス閾値CSS<br>ジェネレーター</h1>
+        <p class="eyebrow">CCFOLIA / CUSTOM CSS</p>
+        <h1>ステータス閾値 CSS 作成ツール</h1>
         <p class="lead">
           適用するステータス、危険域・注意域の閾値、色、アニメーションを選んで、
-          OBS用カスタムCSSを生成できます。
+          OBS用カスタムCSSを作成できます。
         </p>
       </div>
       <div class="hero-badge" aria-hidden="true">
         <span>HP</span>
         <div class="mini-gauge"><i></i></div>
-        <strong>20%</strong>
+        <strong>2 <small>/ 11</small></strong>
       </div>
     </header>
 
@@ -36,10 +36,39 @@
         <div class="panel-heading">
           <div>
             <p class="section-number">01</p>
-            <h2>生成条件</h2>
+            <h2>作成条件</h2>
           </div>
           <button id="resetButton" class="text-button" type="button">初期値に戻す</button>
         </div>
+
+        <fieldset class="form-section">
+          <legend>ステータス一覧CSS</legend>
+
+          <label class="radio-card">
+            <input type="radio" name="baseCss" value="standard">
+            <span>
+              <strong>標準</strong>
+              <small>status-all.css を作成結果の先頭で読み込む</small>
+            </span>
+          </label>
+
+          <label class="radio-card">
+            <input type="radio" name="baseCss" value="stylish" checked>
+            <span>
+              <strong>Stylish</strong>
+              <small>見た目を整えた status-all-stylish.css を読み込む</small>
+            </span>
+          </label>
+
+          <label class="radio-card">
+            <input type="radio" name="baseCss" value="none">
+            <span>
+              <strong>追加しない</strong>
+              <small>すでに別のステータス一覧CSSを使用している場合</small>
+            </span>
+          </label>
+          <p class="hint base-css-note">独自CSSとの組み合わせは動作保証外です。</p>
+        </fieldset>
 
         <fieldset class="form-section">
           <legend>適用対象</legend>
@@ -147,7 +176,7 @@
               <option value="alert">短く2回点滅</option>
               <option value="blink">一定リズムで点滅</option>
               <option value="heartbeat">心拍</option>
-              <option value="heartbeat-strong">強い心拍</option>
+              <option value="heartbeat-strong" selected>強い心拍</option>
             </select>
           </label>
 
@@ -163,7 +192,7 @@
         <div id="errorBox" class="error-box" role="alert" hidden></div>
 
         <button id="generateButton" class="primary-button" type="button">
-          CSSを生成
+          CSSを作成
         </button>
       </section>
 
@@ -171,9 +200,9 @@
         <div class="panel-heading">
           <div>
             <p class="section-number">02</p>
-            <h2>生成結果</h2>
+            <h2>作成結果</h2>
           </div>
-          <span id="outputStatus" class="status-pill">未生成</span>
+          <span id="outputStatus" class="status-pill">未作成</span>
         </div>
 
         <div class="preview-card">
@@ -198,8 +227,8 @@
           </div>
         </div>
 
-        <label class="output-label" for="cssOutput">生成されたCSS</label>
-        <textarea id="cssOutput" readonly spellcheck="false" placeholder="左側で条件を選び、「CSSを生成」を押してください。"></textarea>
+        <label class="output-label" for="cssOutput">作成されたCSS</label>
+        <textarea id="cssOutput" readonly spellcheck="false" placeholder="左側で条件を選び、「CSSを作成」を押してください。"></textarea>
 
         <div class="output-actions">
           <button id="copyButton" class="secondary-button" type="button" disabled>コピー</button>
@@ -209,13 +238,14 @@
         <details class="usage-details">
           <summary>使い方</summary>
           <ol>
+            <li>ベースにするステータス一覧CSSを選びます。</li>
             <li>対象・閾値・色・演出を選びます。</li>
-            <li>「CSSを生成」を押します。</li>
-            <li>生成されたCSSをOBSのブラウザソースのカスタムCSSへ貼り付けます。</li>
+            <li>「CSSを作成」を押します。</li>
+            <li>作成されたCSSをOBSのブラウザソースのカスタムCSSへ貼り付けます。</li>
           </ol>
           <p>
-            <code>status-all-stylish.css</code> などのベースCSSと併用する場合は、
-            ベースCSSの <code>@import</code> より後ろへ貼り付けてください。
+            標準またはStylishを選ぶと、必要な <code>@import</code> も作成結果へ含まれます。
+            独自のステータス一覧CSSを使う場合は「追加しない」を選び、そのCSSより後ろへ作成結果を貼り付けてください。
           </p>
         </details>
       </section>

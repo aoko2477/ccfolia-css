@@ -2,6 +2,7 @@
   "use strict";
 
   const els = {
+    baseCssOptions: [...document.querySelectorAll('input[name="baseCss"]')],
     targetModes: [...document.querySelectorAll('input[name="targetMode"]')],
     singleIndex: document.querySelector("#singleIndex"),
     multipleIndexes: document.querySelector("#multipleIndexes"),
@@ -33,6 +34,7 @@
   };
 
   const defaults = {
+    baseCss: "stylish",
     targetMode: "single",
     singleIndex: 1,
     multipleIndexes: "1, 3",
@@ -42,7 +44,7 @@
     useNormalColor: false,
     midColor: "#f1c40f",
     lowColor: "#e74c3c",
-    animationMode: "none",
+    animationMode: "heartbeat-strong",
     animationDelay: 0.2,
   };
 
@@ -53,6 +55,15 @@
     heartbeat: "status-threshold-heartbeat 1.6s ease-in-out infinite",
     "heartbeat-strong": "status-threshold-heartbeat-strong 1.4s ease-in-out infinite",
   };
+
+  const baseCssUrls = {
+    standard: "https://aoko2477.github.io/ccfolia-css/modified-code/status-all.css",
+    stylish: "https://aoko2477.github.io/ccfolia-css/modified-code/status-all-stylish.css",
+  };
+
+  function getBaseCss() {
+    return els.baseCssOptions.find((radio) => radio.checked)?.value ?? "stylish";
+  }
 
   function getTargetMode() {
     return els.targetModes.find((radio) => radio.checked)?.value ?? "single";
@@ -164,6 +175,7 @@
     }
 
     return {
+      baseCss: getBaseCss(),
       targetMode,
       indexes,
       lowMax,
@@ -332,10 +344,15 @@ CCFOLIA ステータス閾値CSS
 対象：${targetDescription(settings)}
 危険域：${settings.lowMax}%以下
 注意域：${settings.midMax}%以下
-生成元：https://aoko2477.github.io/ccfolia-css/tools/threshold-css-generator/
+作成元：https://aoko2477.github.io/ccfolia-css/tools/threshold-css-generator/
 */`;
 
+    const baseImport = baseCssUrls[settings.baseCss]
+      ? `@import url("${baseCssUrls[settings.baseCss]}");`
+      : null;
+
     return [
+      ...(baseImport ? [baseImport, ""] : []),
       heading,
       "",
       rootLines.join("\n"),
@@ -407,7 +424,7 @@ CCFOLIA ステータス閾値CSS
       const css = generateCss(settings);
 
       els.cssOutput.value = css;
-      els.outputStatus.textContent = "生成済み";
+      els.outputStatus.textContent = "作成済み";
       els.outputStatus.classList.add("is-ready");
       els.copyButton.disabled = false;
       els.downloadButton.disabled = false;
@@ -463,6 +480,10 @@ CCFOLIA ステータス閾値CSS
   }
 
   function reset() {
+    els.baseCssOptions.forEach((radio) => {
+      radio.checked = radio.value === defaults.baseCss;
+    });
+
     els.targetModes.forEach((radio) => {
       radio.checked = radio.value === defaults.targetMode;
     });
@@ -484,7 +505,7 @@ CCFOLIA ステータス閾値CSS
     els.cssOutput.value = "";
     els.copyButton.disabled = true;
     els.downloadButton.disabled = true;
-    els.outputStatus.textContent = "未生成";
+    els.outputStatus.textContent = "未作成";
     els.outputStatus.classList.remove("is-ready");
 
     clearError();
