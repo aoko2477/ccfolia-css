@@ -1,0 +1,184 @@
+/* --- 全ステータスバーの割合による色変更 --- */
+:root {
+  /* --status-threshold-normal-color: #2ecc71; */
+  /*
+  通常時の色（任意、上記は緑）
+  未設定の場合はベースCSSの --gauge-color、
+  さらに未設定の場合はCCFOLIAのデフォルト色
+  rgb(245, 245, 245) を使用します。
+  */
+
+  --status-threshold-mid-color: #f1c40f; /* 黄（約50%以下） */
+  --status-threshold-low-color: #e74c3c; /* 赤（約20%以下） */
+
+  /* --- 低下時の演出 --- */
+  --status-threshold-alert-mode: none;
+  --status-threshold-alert-delay: 0.2s;
+
+  /*
+  候補：
+  none                                      → 点滅なし
+  status-threshold-alert 0.6s ease-out 2    → 短く2回点滅
+  status-threshold-blink 1s linear infinite → 一定リズムで点滅
+  status-threshold-heartbeat 1.6s ease-in-out infinite
+    → 心拍のような拍動
+  status-threshold-heartbeat-strong 1.4s ease-in-out infinite
+    → 強い心拍
+  */
+}
+
+/* ===== アニメーション定義 ===== */
+@keyframes status-threshold-alert {
+  0%   { opacity: 1; box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+  30%  { opacity: 0.4; box-shadow: 0 0 8px rgba(231,76,60,0.9); }
+  60%  { opacity: 1; box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+  100% { opacity: 1; box-shadow: none; }
+}
+@keyframes status-threshold-blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+@keyframes status-threshold-heartbeat {
+  0%   { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+  10%  { transform: scale(1.15); box-shadow: 0 0 10px rgba(231,76,60,1); }
+  20%  { transform: scale(1); }
+  30%  { transform: scale(1.15); box-shadow: 0 0 8px rgba(231,76,60,0.8); }
+  40%  { transform: scale(1); }
+  100% { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,0.4); }
+}
+@keyframes status-threshold-heartbeat-strong {
+  0% { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,0.4); filter: brightness(1); }
+  8% { transform: scale(0.92); box-shadow: 0 0 1px rgba(231,76,60,0.3); filter: brightness(0.9); }
+  16% { transform: scale(1.18); box-shadow: 0 0 12px rgba(231,76,60,1); filter: brightness(1.2); }
+  24% { transform: scale(0.96); box-shadow: 0 0 4px rgba(231,76,60,0.6); filter: brightness(1); }
+  32% { transform: scale(1.12); box-shadow: 0 0 8px rgba(231,76,60,0.8); filter: brightness(1.15); }
+  40% { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,0.4); filter: brightness(1); }
+  100% { transform: scale(1); box-shadow: 0 0 2px rgba(231,76,60,0.4); filter: brightness(1); }
+}
+
+/* ===== 全ステータス色分け（Python生成） ===== */
+
+.MuiBadge-root + div > div > div > div:last-child > div:last-child {
+  background: var(--status-threshold-normal-color, var(--gauge-color, rgb(245, 245, 245))) !important;
+}
+
+/* 黄（20.xx〜49.xx + 21〜49 + 50%） */
+
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 20."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 21%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 21."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 22%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 22."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 23%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 23."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 24%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 24."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 25%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 25."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 26%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 26."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 27%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 27."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 28%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 28."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 29%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 29."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 30%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 30."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 31%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 31."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 32%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 32."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 33%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 33."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 34%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 34."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 35%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 35."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 36%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 36."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 37%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 37."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 38%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 38."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 39%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 39."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 40%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 40."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 41%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 41."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 42%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 42."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 43%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 43."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 44%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 44."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 45%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 45."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 46%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 46."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 47%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 47."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 48%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 48."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 49%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 49."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 50%;"] {
+  background: var(--status-threshold-mid-color, #f1c40f) !important;
+}
+
+/* 赤（0〜19.xx + 20%） */
+
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 0%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 0."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 1%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 1."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 2%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 2."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 3%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 3."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 4%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 4."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 5%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 5."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 6%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 6."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 7%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 7."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 8%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 8."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 9%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 9."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 10%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 10."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 11%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 11."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 12%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 12."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 13%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 13."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 14%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 14."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 15%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 15."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 16%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 16."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 17%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 17."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 18%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 18."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 19%;"],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 19."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 20%;"] {
+  background: var(--status-threshold-low-color, #e74c3c) !important;
+  animation: var(--status-threshold-alert-mode, none);
+  animation-delay: var(--status-threshold-alert-delay, 0.2s);
+}
+
+/* 通常色補正（50.xx + 100%） */
+
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style^="width: 50."],
+.MuiBadge-root + div > div > div > div:last-child > div:last-child[style="width: 100%;"] {
+  background: var(--status-threshold-normal-color, var(--gauge-color, rgb(245, 245, 245))) !important;
+}
