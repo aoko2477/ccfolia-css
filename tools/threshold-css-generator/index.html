@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCFOLIA ステータス閾値CSSジェネレーター</title>
+  <meta name="description" content="CCFOLIAのステータスゲージを、対象・閾値・色・アニメーションを選んでCSS生成するツールです。">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">CCFOLIA CSS TOOL</p>
+        <h1>ステータス閾値CSS<br>ジェネレーター</h1>
+        <p class="lead">
+          適用するステータス、危険域・注意域の閾値、色、アニメーションを選んで、
+          OBS用カスタムCSSを生成できます。
+        </p>
+      </div>
+      <div class="hero-badge" aria-hidden="true">
+        <span>HP</span>
+        <div class="mini-gauge"><i></i></div>
+        <strong>20%</strong>
+      </div>
+    </header>
+
+    <section class="notice" aria-label="注意事項">
+      <strong>非公式ツールです。</strong>
+      CCFOLIA・OBSのアップデートにより動作しなくなる場合があります。
+      問題が発生した際、公式へ問い合わせないでください。
+    </section>
+
+    <div class="workspace">
+      <section class="panel controls-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">01</p>
+            <h2>生成条件</h2>
+          </div>
+          <button id="resetButton" class="text-button" type="button">初期値に戻す</button>
+        </div>
+
+        <fieldset class="form-section">
+          <legend>適用対象</legend>
+
+          <label class="radio-card">
+            <input type="radio" name="targetMode" value="all">
+            <span>
+              <strong>すべてのステータス</strong>
+              <small>HP・MP・SANなど、表示されている全ゲージに適用</small>
+            </span>
+          </label>
+
+          <label class="radio-card">
+            <input type="radio" name="targetMode" value="single" checked>
+            <span>
+              <strong>1つのステータス</strong>
+              <small>指定した順番のゲージだけに適用</small>
+            </span>
+          </label>
+
+          <div class="dependent-field" data-for="single">
+            <label for="singleIndex">ステータスの順番</label>
+            <div class="number-with-unit">
+              <input id="singleIndex" type="number" min="1" max="99" step="1" value="1">
+              <span>番目</span>
+            </div>
+          </div>
+
+          <label class="radio-card">
+            <input type="radio" name="targetMode" value="multiple">
+            <span>
+              <strong>複数のステータス</strong>
+              <small>カンマ区切りで複数の順番を指定</small>
+            </span>
+          </label>
+
+          <div class="dependent-field" data-for="multiple" hidden>
+            <label for="multipleIndexes">対象の順番</label>
+            <input id="multipleIndexes" type="text" inputmode="numeric" placeholder="例：1, 3, 4" value="1, 3">
+            <p class="hint">半角カンマ区切り。重複は自動で除外します。</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend>閾値</legend>
+          <div class="two-column">
+            <label class="field">
+              <span>危険域（赤）</span>
+              <div class="number-with-unit">
+                <input id="lowMax" type="number" min="0" max="99" step="1" value="20">
+                <span>%以下</span>
+              </div>
+            </label>
+            <label class="field">
+              <span>注意域（黄）</span>
+              <div class="number-with-unit">
+                <input id="midMax" type="number" min="1" max="100" step="1" value="50">
+                <span>%以下</span>
+              </div>
+            </label>
+          </div>
+          <p class="hint">危険域の上限は、注意域の上限より小さくしてください。</p>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend>色</legend>
+          <div class="color-grid">
+            <div class="color-field">
+              <label for="normalColor">通常色</label>
+              <div class="color-row">
+                <input id="normalColor" type="color" value="#2ecc71">
+                <input id="normalColorText" type="text" value="#2ecc71" spellcheck="false">
+              </div>
+              <label class="checkbox-row">
+                <input id="useNormalColor" type="checkbox">
+                <span>通常色も指定する</span>
+              </label>
+              <p class="hint">未指定時は <code>--gauge-color</code> → CCFOLIA既定色の順に参照します。</p>
+            </div>
+
+            <div class="color-field">
+              <label for="midColor">注意色</label>
+              <div class="color-row">
+                <input id="midColor" type="color" value="#f1c40f">
+                <input id="midColorText" type="text" value="#f1c40f" spellcheck="false">
+              </div>
+            </div>
+
+            <div class="color-field">
+              <label for="lowColor">危険色</label>
+              <div class="color-row">
+                <input id="lowColor" type="color" value="#e74c3c">
+                <input id="lowColorText" type="text" value="#e74c3c" spellcheck="false">
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="form-section">
+          <legend>危険域のアニメーション</legend>
+          <label class="field">
+            <span>演出</span>
+            <select id="animationMode">
+              <option value="none">なし</option>
+              <option value="alert">短く2回点滅</option>
+              <option value="blink">一定リズムで点滅</option>
+              <option value="heartbeat">心拍</option>
+              <option value="heartbeat-strong">強い心拍</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>開始までの遅延</span>
+            <div class="number-with-unit">
+              <input id="animationDelay" type="number" min="0" max="10" step="0.1" value="0.2">
+              <span>秒</span>
+            </div>
+          </label>
+        </fieldset>
+
+        <div id="errorBox" class="error-box" role="alert" hidden></div>
+
+        <button id="generateButton" class="primary-button" type="button">
+          CSSを生成
+        </button>
+      </section>
+
+      <section class="panel output-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-number">02</p>
+            <h2>生成結果</h2>
+          </div>
+          <span id="outputStatus" class="status-pill">未生成</span>
+        </div>
+
+        <div class="preview-card">
+          <div class="preview-header">
+            <strong>プレビュー</strong>
+            <span id="previewTarget">1番目のステータス</span>
+          </div>
+
+          <div class="preview-status-list">
+            <div class="preview-status">
+              <div><span>通常</span><strong>75 / 100</strong></div>
+              <div class="preview-track"><i id="previewNormal" style="width:75%"></i></div>
+            </div>
+            <div class="preview-status">
+              <div><span>注意</span><strong id="previewMidLabel">50 / 100</strong></div>
+              <div class="preview-track"><i id="previewMid" style="width:50%"></i></div>
+            </div>
+            <div class="preview-status">
+              <div><span>危険</span><strong id="previewLowLabel">20 / 100</strong></div>
+              <div class="preview-track"><i id="previewLow" style="width:20%"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <label class="output-label" for="cssOutput">生成されたCSS</label>
+        <textarea id="cssOutput" readonly spellcheck="false" placeholder="左側で条件を選び、「CSSを生成」を押してください。"></textarea>
+
+        <div class="output-actions">
+          <button id="copyButton" class="secondary-button" type="button" disabled>コピー</button>
+          <button id="downloadButton" class="secondary-button" type="button" disabled>CSSを保存</button>
+        </div>
+
+        <details class="usage-details">
+          <summary>使い方</summary>
+          <ol>
+            <li>対象・閾値・色・演出を選びます。</li>
+            <li>「CSSを生成」を押します。</li>
+            <li>生成されたCSSをOBSのブラウザソースのカスタムCSSへ貼り付けます。</li>
+          </ol>
+          <p>
+            <code>status-all-stylish.css</code> などのベースCSSと併用する場合は、
+            ベースCSSの <code>@import</code> より後ろへ貼り付けてください。
+          </p>
+        </details>
+      </section>
+    </div>
+
+    <footer>
+      <p>
+        <a href="https://github.com/aoko2477/ccfolia-css" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span aria-hidden="true">·</span>
+        CCFOLIA / OBS 非公式ツール
+      </p>
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
