@@ -247,6 +247,22 @@
           </div>
         </div>
 
+        <div class="source-url-card">
+          <div class="source-url-heading">
+            <strong>OBSブラウザソースのURL</strong>
+            <span id="sourceUrlType">キャラクター一覧</span>
+          </div>
+          <label for="sourceUrl">URL欄へ入力する例</label>
+          <input
+            id="sourceUrl"
+            type="text"
+            value="https://ccfolia.com/rooms/{ルームID}/"
+            readonly
+            spellcheck="false"
+          >
+          <p id="sourceUrlHint">ルーム画面のURLを指定します。</p>
+        </div>
+
         <label class="output-label" for="cssOutput">作成されたCSS</label>
         <textarea id="cssOutput" readonly spellcheck="false" placeholder="左側で条件を選び、「CSSを作成」を押してください。"></textarea>
 

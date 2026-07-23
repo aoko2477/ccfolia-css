@@ -34,6 +34,9 @@
     previewLow: document.querySelector("#previewLow"),
     previewMidLabel: document.querySelector("#previewMidLabel"),
     previewLowLabel: document.querySelector("#previewLowLabel"),
+    sourceUrlType: document.querySelector("#sourceUrlType"),
+    sourceUrl: document.querySelector("#sourceUrl"),
+    sourceUrlHint: document.querySelector("#sourceUrlHint"),
   };
 
   const defaults = {
@@ -102,11 +105,25 @@
   }
 
   function updatePageType() {
-    const presets = baseCssPresets[getPageType()];
+    const pageType = getPageType();
+    const presets = baseCssPresets[pageType];
     els.standardBaseDescription.textContent =
       `${presets.standard.filename} を作成結果の先頭で読み込む`;
     els.stylishBaseDescription.textContent =
       `見た目を整えた ${presets.stylish.filename} を読み込む`;
+
+    if (pageType === "fixed-status") {
+      els.sourceUrlType.textContent = "指定キャラクターのステータス表示";
+      els.sourceUrl.value =
+        "https://ccfolia.com/rooms/{ルームID}/characters/{キャラクターID}";
+      els.sourceUrlHint.textContent =
+        "表示したいキャラクターの個別ページURLを指定します。";
+    } else {
+      els.sourceUrlType.textContent = "キャラクター一覧";
+      els.sourceUrl.value = "https://ccfolia.com/rooms/{ルームID}/";
+      els.sourceUrlHint.textContent = "ルーム画面のURLを指定します。";
+    }
+
     updatePreview();
   }
 

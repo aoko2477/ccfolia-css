@@ -21,6 +21,7 @@ https://aoko2477.github.io/ccfolia-css/tools/threshold-css-generator/
 - 危険域アニメーションの選択
 - CSSのコピー
 - CSSファイル保存
+- OBSブラウザソース用URLの案内
 - 簡易プレビュー
 
 `fixed-status` では通常色を指定しない限り、ベースCSS側の色やグラデーションを維持します。

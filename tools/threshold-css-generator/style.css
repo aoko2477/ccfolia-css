@@ -472,6 +472,53 @@ button:disabled {
   transform-origin: left center;
 }
 
+.source-url-card {
+  margin-bottom: 18px;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.source-url-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 9px;
+}
+
+.source-url-heading strong {
+  font-size: 13px;
+}
+
+.source-url-heading span {
+  color: var(--muted);
+  font-size: 10px;
+  text-align: right;
+}
+
+.source-url-card label {
+  display: block;
+  margin-bottom: 5px;
+  color: #50504c;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.source-url-card input {
+  min-height: 38px;
+  padding: 7px 9px;
+  font-family: Consolas, "SFMono-Regular", monospace;
+  font-size: 11px;
+  cursor: text;
+}
+
+.source-url-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
 textarea {
   min-height: 420px;
   resize: vertical;
