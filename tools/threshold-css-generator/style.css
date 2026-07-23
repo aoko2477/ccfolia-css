@@ -517,6 +517,10 @@ footer p {
   margin-bottom: 0;
 }
 
+.footer-article {
+  margin-top: 5px;
+}
+
 footer span {
   margin: 0 7px;
 }
