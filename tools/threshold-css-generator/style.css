@@ -364,6 +364,132 @@ input[type="color"] {
   accent-color: var(--accent);
 }
 
+.advanced-settings {
+  border-top: 1px solid var(--line-soft);
+}
+
+.advanced-settings > summary {
+  padding: 18px 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.advanced-settings[open] > summary {
+  padding-bottom: 12px;
+}
+
+.advanced-settings-body {
+  padding-bottom: 18px;
+}
+
+.advanced-settings-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px;
+  border: 1px solid var(--line-soft);
+  background: var(--panel-alt);
+}
+
+.advanced-settings-heading strong {
+  font-size: 12px;
+}
+
+.advanced-settings-heading p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.switch-row {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.switch-row input {
+  accent-color: var(--accent);
+}
+
+.status-color-editor {
+  padding: 12px;
+  border: 1px solid var(--line-soft);
+  border-top: 0;
+}
+
+.status-color-editor.is-disabled {
+  opacity: 0.48;
+}
+
+.status-color-columns,
+.status-color-row {
+  display: grid;
+  grid-template-columns: 70px minmax(80px, 0.8fr) minmax(130px, 1fr) 28px;
+  gap: 8px;
+  align-items: center;
+}
+
+.status-color-columns {
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.status-color-rows {
+  display: grid;
+  gap: 7px;
+}
+
+.status-color-row input[type="number"],
+.status-color-row input[type="text"] {
+  min-width: 0;
+  min-height: 36px;
+}
+
+.status-color-picker {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 5px;
+}
+
+.status-color-picker input[type="color"] {
+  width: 36px;
+  height: 36px;
+}
+
+.remove-row-button {
+  width: 28px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.remove-row-button:hover {
+  color: var(--danger);
+}
+
+.add-row-button {
+  margin-top: 10px;
+  padding: 5px 0;
+  border: 0;
+  border-bottom: 1px solid #777;
+  background: transparent;
+  color: var(--text);
+  font-size: 11px;
+}
+
+.status-color-editor > .hint {
+  margin: 9px 0 0;
+}
+
 .primary-button,
 .secondary-button {
   min-height: 42px;
@@ -632,6 +758,32 @@ footer span {
   .color-grid,
   .preview-status-list {
     grid-template-columns: 1fr;
+  }
+
+  .advanced-settings-heading {
+    display: block;
+  }
+
+  .switch-row {
+    margin-top: 10px;
+  }
+
+  .status-color-columns {
+    display: none;
+  }
+
+  .status-color-row {
+    grid-template-columns: 64px minmax(0, 1fr) 28px;
+  }
+
+  .status-color-picker {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .remove-row-button {
+    grid-column: 3;
+    grid-row: 1;
   }
 
   textarea {

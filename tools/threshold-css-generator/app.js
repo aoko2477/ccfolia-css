@@ -19,6 +19,10 @@
     midColorText: document.querySelector("#midColorText"),
     lowColor: document.querySelector("#lowColor"),
     lowColorText: document.querySelector("#lowColorText"),
+    useStatusColors: document.querySelector("#useStatusColors"),
+    statusColorEditor: document.querySelector("#statusColorEditor"),
+    statusColorRows: document.querySelector("#statusColorRows"),
+    addStatusColorButton: document.querySelector("#addStatusColorButton"),
     animationMode: document.querySelector("#animationMode"),
     animationDelay: document.querySelector("#animationDelay"),
     generateButton: document.querySelector("#generateButton"),
@@ -51,6 +55,12 @@
     useNormalColor: false,
     midColor: "#f1c40f",
     lowColor: "#e74c3c",
+    useStatusColors: false,
+    statusColors: [
+      { index: 1, label: "HP", color: "#2ecc71" },
+      { index: 2, label: "MP", color: "#3498db" },
+      { index: 3, label: "SAN", color: "#6a6a6a" },
+    ],
     animationMode: "heartbeat-strong",
     animationDelay: 0.2,
   };
@@ -164,6 +174,95 @@
     }
   }
 
+  function createStatusColorRow(setting) {
+    const row = document.createElement("div");
+    row.className = "status-color-row";
+    row.innerHTML = `
+      <input class="status-color-index" type="number" min="1" max="99" step="1" aria-label="対象番号">
+      <input class="status-color-label" type="text" maxlength="20" aria-label="表示名" placeholder="例：HP">
+      <div class="status-color-picker">
+        <input class="status-color-input" type="color" aria-label="色">
+        <input class="status-color-text" type="text" spellcheck="false" aria-label="色コード">
+      </div>
+      <button class="remove-row-button" type="button" aria-label="この色を削除">×</button>
+    `;
+
+    const indexInput = row.querySelector(".status-color-index");
+    const labelInput = row.querySelector(".status-color-label");
+    const colorInput = row.querySelector(".status-color-input");
+    const colorText = row.querySelector(".status-color-text");
+    const removeButton = row.querySelector(".remove-row-button");
+
+    indexInput.value = setting.index;
+    labelInput.value = setting.label;
+    colorInput.value = setting.color;
+    colorText.value = setting.color;
+
+    [indexInput, labelInput].forEach((input) => {
+      input.addEventListener("input", updatePreview);
+    });
+    colorInput.addEventListener("input", () => {
+      syncColorPair(colorInput, colorText, "picker");
+      updatePreview();
+    });
+    colorText.addEventListener("input", () => {
+      syncColorPair(colorInput, colorText, "text");
+      updatePreview();
+    });
+    removeButton.addEventListener("click", () => {
+      row.remove();
+      updatePreview();
+    });
+
+    els.statusColorRows.appendChild(row);
+  }
+
+  function setStatusColorRows(settings) {
+    els.statusColorRows.replaceChildren();
+    settings.forEach(createStatusColorRow);
+  }
+
+  function updateStatusColorEditor() {
+    const enabled = els.useStatusColors.checked;
+    els.statusColorEditor.classList.toggle("is-disabled", !enabled);
+    els.statusColorEditor
+      .querySelectorAll("input, button")
+      .forEach((control) => {
+        control.disabled = !enabled;
+      });
+    updatePreview();
+  }
+
+  function readStatusColors() {
+    if (!els.useStatusColors.checked) {
+      return [];
+    }
+
+    const settings = [...els.statusColorRows.querySelectorAll(".status-color-row")]
+      .map((row) => {
+        const index = Number(row.querySelector(".status-color-index").value);
+        const label = row.querySelector(".status-color-label").value.trim();
+        const color = normalizeHex(row.querySelector(".status-color-text").value);
+
+        if (!Number.isInteger(index) || index < 1 || index > 99) {
+          throw new Error("通常色の対象番号は1〜99の整数で指定してください。");
+        }
+        if (!color) {
+          throw new Error(`${index}番目の通常色をHEX形式で指定してください。`);
+        }
+
+        return { index, label, color };
+      })
+      .sort((a, b) => a.index - b.index);
+
+    const indexes = settings.map((setting) => setting.index);
+    if (new Set(indexes).size !== indexes.length) {
+      throw new Error("通常色の対象番号が重複しています。");
+    }
+
+    return settings;
+  }
+
   function parseMultipleIndexes(value) {
     const rawItems = value.split(",").map((item) => item.trim());
 
@@ -243,24 +342,27 @@
       normalColor,
       midColor,
       lowColor,
+      useStatusColors: els.useStatusColors.checked,
+      statusColors: readStatusColors(),
       animationMode: els.animationMode.value,
       animationDelay,
     };
   }
 
-  function makeBases(settings) {
-    const prefix = settings.pageType === "fixed-status"
+  function makeBase(pageType, index = null) {
+    const prefix = pageType === "fixed-status"
       ? '[variant="bar"]'
       : ".MuiBadge-root + div > div";
+    const child = index === null ? "div" : `div:nth-child(${index})`;
+    return `${prefix} > ${child} > div:last-child > div:last-child`;
+  }
 
+  function makeBases(settings) {
     if (settings.targetMode === "all") {
-      return [`${prefix} > div > div:last-child > div:last-child`];
+      return [makeBase(settings.pageType)];
     }
 
-    return settings.indexes.map(
-      (index) =>
-        `${prefix} > div:nth-child(${index}) > div:last-child > div:last-child`
-    );
+    return settings.indexes.map((index) => makeBase(settings.pageType, index));
   }
 
   function makeSelectors(bases, kind, settings) {
@@ -407,6 +509,22 @@
         ])
       : null;
 
+    const statusColorBlocks = settings.statusColors.map((setting) => {
+      const base = makeBase(settings.pageType, setting.index);
+      const label = setting.label.replace(/\*\//g, "").trim();
+      const comment = label
+        ? `/* ${setting.index}番目：${label} */`
+        : `/* ${setting.index}番目 */`;
+      const selectors = [
+        base,
+        `${base}[style^="width: ${settings.midMax}."]`,
+        `${base}[style="width: 100%;"]`,
+      ];
+      return `${comment}\n${renderBlock(selectors, [
+        `background: ${setting.color} !important;`,
+      ])}`;
+    });
+
     const heading = `/*
 CCFOLIA ステータス閾値CSS
 表示形式：${pageTypeDescription(settings.pageType)}
@@ -429,15 +547,18 @@ CCFOLIA ステータス閾値CSS
       "",
       animationKeyframes(),
       ...(defaultBlock ? ["", "/* ===== 通常色 ===== */", defaultBlock] : []),
+      ...(normalFixBlock
+        ? ["", `/* ===== 通常色補正（${settings.midMax}%超） ===== */`, normalFixBlock]
+        : []),
+      ...(statusColorBlocks.length
+        ? ["", "/* ===== ステータスごとの通常色 ===== */", ...statusColorBlocks]
+        : []),
       "",
       `/* ===== 注意域（${settings.lowMax}%超〜${settings.midMax}%以下） ===== */`,
       midBlock,
       "",
       `/* ===== 危険域（${settings.lowMax}%以下） ===== */`,
       lowBlock,
-      ...(normalFixBlock
-        ? ["", `/* ===== 通常色補正（${settings.midMax}%超） ===== */`, normalFixBlock]
-        : []),
       "",
     ].join("\n");
   }
@@ -468,7 +589,9 @@ CCFOLIA ステータス閾値CSS
     els.previewMidLabel.textContent = `${settings.midMax} / 100`;
     els.previewLowLabel.textContent = `${settings.lowMax} / 100`;
 
-    const normalColor = settings.useNormalColor ? settings.normalColor : "#6a6a6a";
+    const firstStatusColor = settings.statusColors.find((setting) => setting.index === 1);
+    const normalColor = firstStatusColor?.color ??
+      (settings.useNormalColor ? settings.normalColor : "#6a6a6a");
     els.previewNormal.style.background = normalColor;
     els.previewMid.style.background = settings.midColor;
     els.previewLow.style.background = settings.lowColor;
@@ -572,6 +695,8 @@ CCFOLIA ステータス閾値CSS
     els.midColorText.value = defaults.midColor;
     els.lowColor.value = defaults.lowColor;
     els.lowColorText.value = defaults.lowColor;
+    els.useStatusColors.checked = defaults.useStatusColors;
+    setStatusColorRows(defaults.statusColors);
     els.animationMode.value = defaults.animationMode;
     els.animationDelay.value = defaults.animationDelay;
 
@@ -582,6 +707,7 @@ CCFOLIA ステータス閾値CSS
     els.outputStatus.classList.remove("is-ready");
 
     clearError();
+    updateStatusColorEditor();
     updatePageType();
     updateTargetFields();
     updatePreview();
@@ -593,6 +719,31 @@ CCFOLIA ステータス閾値CSS
 
   els.targetModes.forEach((radio) => {
     radio.addEventListener("change", updateTargetFields);
+  });
+
+  els.useStatusColors.addEventListener("change", updateStatusColorEditor);
+  els.addStatusColorButton.addEventListener("click", () => {
+    const rows = [...els.statusColorRows.querySelectorAll(".status-color-row")];
+    const indexes = new Set(rows.map((row) =>
+      Number(row.querySelector(".status-color-index").value)
+    ));
+    const nextIndex = Array.from(
+      { length: 99 },
+      (_, index) => index + 1
+    ).find((index) => !indexes.has(index));
+
+    if (!nextIndex) {
+      showError("通常色は99件まで追加できます。");
+      return;
+    }
+
+    createStatusColorRow({
+      index: nextIndex,
+      label: "",
+      color: "#6a6a6a",
+    });
+    clearError();
+    updateStatusColorEditor();
   });
 
   [
@@ -628,6 +779,8 @@ CCFOLIA ステータス閾値CSS
   els.copyButton.addEventListener("click", copyCss);
   els.downloadButton.addEventListener("click", downloadCss);
 
+  setStatusColorRows(defaults.statusColors);
+  updateStatusColorEditor();
   updatePageType();
   updateTargetFields();
   updatePreview();

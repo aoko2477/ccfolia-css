@@ -187,6 +187,36 @@
           </div>
         </fieldset>
 
+        <details class="advanced-settings">
+          <summary>詳細設定</summary>
+          <div class="advanced-settings-body">
+            <div class="advanced-settings-heading">
+              <div>
+                <strong>ステータスごとの通常色</strong>
+                <p>閾値による注意色・危険色とは別に、通常時の色を番号ごとに指定します。</p>
+              </div>
+              <label class="switch-row">
+                <input id="useStatusColors" type="checkbox">
+                <span>使用する</span>
+              </label>
+            </div>
+
+            <div id="statusColorEditor" class="status-color-editor is-disabled">
+              <div class="status-color-columns" aria-hidden="true">
+                <span>対象番号</span>
+                <span>表示名</span>
+                <span>色</span>
+                <span></span>
+              </div>
+              <div id="statusColorRows" class="status-color-rows"></div>
+              <button id="addStatusColorButton" class="add-row-button" type="button">
+                ＋ 色を追加
+              </button>
+              <p class="hint">表示名は整理用です。作成されるCSSではコメントとして使用します。</p>
+            </div>
+          </div>
+        </details>
+
         <fieldset class="form-section">
           <legend>危険域のアニメーション</legend>
           <label class="field">

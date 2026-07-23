@@ -18,6 +18,9 @@ https://aoko2477.github.io/ccfolia-css/tools/threshold-css-generator/
   - 複数のステータス（例：`1, 3, 4`）
 - 危険域・注意域の閾値指定
 - 通常色・注意色・危険色の指定
+- ステータスごとの通常色指定
+  - HP・MP・SANプリセット
+  - 対象番号・表示名・色の追加と削除
 - 危険域アニメーションの選択
 - CSSのコピー
 - CSSファイル保存
