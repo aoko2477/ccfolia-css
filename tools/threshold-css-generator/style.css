@@ -547,6 +547,13 @@ button:disabled {
   color: var(--success);
 }
 
+.status-pill.is-stale {
+  border-color: #9a7936;
+  background: #f5f0e5;
+  color: #71591f;
+  animation: status-nudge 0.32s ease-out;
+}
+
 .preview-card {
   margin-bottom: 18px;
   padding: 14px;
@@ -704,6 +711,13 @@ footer span {
   60%, 100% { opacity: 1; }
 }
 
+@keyframes status-nudge {
+  0%, 100% { transform: translateX(0); }
+  28% { transform: translateX(-3px); }
+  58% { transform: translateX(3px); }
+  80% { transform: translateX(-1px); }
+}
+
 @keyframes preview-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: .45; }
@@ -722,6 +736,12 @@ footer span {
   16% { transform: scale(1.18); filter: brightness(1.2); }
   24% { transform: scale(.97); }
   32% { transform: scale(1.12); filter: brightness(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-pill.is-stale {
+    animation: none;
+  }
 }
 
 @media (max-width: 920px) {

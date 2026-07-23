@@ -134,7 +134,7 @@
       els.sourceUrlHint.textContent = "ルーム画面のURLを指定します。";
     }
 
-    updatePreview();
+    handleSettingsChange();
   }
 
   function updateTargetFields() {
@@ -142,7 +142,7 @@
     els.dependentFields.forEach((field) => {
       field.hidden = field.dataset.for !== mode;
     });
-    updatePreview();
+    handleSettingsChange();
   }
 
   function normalizeHex(value) {
@@ -199,19 +199,19 @@
     colorText.value = setting.color;
 
     [indexInput, labelInput].forEach((input) => {
-      input.addEventListener("input", updatePreview);
+      input.addEventListener("input", handleSettingsChange);
     });
     colorInput.addEventListener("input", () => {
       syncColorPair(colorInput, colorText, "picker");
-      updatePreview();
+      handleSettingsChange();
     });
     colorText.addEventListener("input", () => {
       syncColorPair(colorInput, colorText, "text");
-      updatePreview();
+      handleSettingsChange();
     });
     removeButton.addEventListener("click", () => {
       row.remove();
-      updatePreview();
+      handleSettingsChange();
     });
 
     els.statusColorRows.appendChild(row);
@@ -230,7 +230,7 @@
       .forEach((control) => {
         control.disabled = !enabled;
       });
-    updatePreview();
+    handleSettingsChange();
   }
 
   function readStatusColors() {
@@ -573,6 +573,24 @@ CCFOLIA ステータス閾値CSS
     els.errorBox.textContent = "";
   }
 
+  function markOutputStale() {
+    if (!els.cssOutput.value) {
+      return;
+    }
+
+    els.outputStatus.textContent = "未反映";
+    els.outputStatus.classList.remove("is-ready", "is-stale");
+    void els.outputStatus.offsetWidth;
+    els.outputStatus.classList.add("is-stale");
+    els.copyButton.disabled = true;
+    els.downloadButton.disabled = true;
+  }
+
+  function handleSettingsChange() {
+    markOutputStale();
+    updatePreview();
+  }
+
   function updatePreview() {
     let settings;
     try {
@@ -617,6 +635,7 @@ CCFOLIA ステータス閾値CSS
 
       els.cssOutput.value = css;
       els.outputStatus.textContent = "作成済み";
+      els.outputStatus.classList.remove("is-stale");
       els.outputStatus.classList.add("is-ready");
       els.copyButton.disabled = false;
       els.downloadButton.disabled = false;
@@ -704,7 +723,7 @@ CCFOLIA ステータス閾値CSS
     els.copyButton.disabled = true;
     els.downloadButton.disabled = true;
     els.outputStatus.textContent = "未作成";
-    els.outputStatus.classList.remove("is-ready");
+    els.outputStatus.classList.remove("is-ready", "is-stale");
 
     clearError();
     updateStatusColorEditor();
@@ -715,6 +734,10 @@ CCFOLIA ステータス閾値CSS
 
   els.pageTypeOptions.forEach((radio) => {
     radio.addEventListener("change", updatePageType);
+  });
+
+  els.baseCssOptions.forEach((radio) => {
+    radio.addEventListener("change", handleSettingsChange);
   });
 
   els.targetModes.forEach((radio) => {
@@ -755,8 +778,8 @@ CCFOLIA ステータス閾値CSS
     els.animationMode,
     els.animationDelay,
   ].forEach((element) => {
-    element.addEventListener("input", updatePreview);
-    element.addEventListener("change", updatePreview);
+    element.addEventListener("input", handleSettingsChange);
+    element.addEventListener("change", handleSettingsChange);
   });
 
   [
@@ -766,11 +789,11 @@ CCFOLIA ステータス閾値CSS
   ].forEach(([picker, text]) => {
     picker.addEventListener("input", () => {
       syncColorPair(picker, text, "picker");
-      updatePreview();
+      handleSettingsChange();
     });
     text.addEventListener("input", () => {
       syncColorPair(picker, text, "text");
-      updatePreview();
+      handleSettingsChange();
     });
   });
 
