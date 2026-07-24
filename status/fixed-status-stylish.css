@@ -20,7 +20,39 @@
   --gauge-track: rgba(255,255,255,0.18);  /* 暗背景でも見える */
   --gauge-border: rgba(255,255,255,0.28); /* トラックの輪郭 */
   --label-color: #f5f5f5;                 /* ラベル色（暗背景想定） */
+
+  /* キャラクター画像 */
+  --character-width: 80px;
+  --character-aspect-ratio: 3 / 4;
+  --character-radius: 6px;
+  --character-image-fit: cover;
+  --character-image-position: center top;
 }
+
+/*
+標準の縦長表示：
+:root {
+  --character-width: 80px;
+  --character-aspect-ratio: 3 / 4;
+  --character-radius: 6px;
+  --character-image-fit: cover;
+  --character-image-position: center top;
+}
+
+全身表示の設定例：
+:root {
+  --character-width: 120px;
+  --character-aspect-ratio: 2 / 3;
+  --character-radius: 6px;
+  --character-image-fit: contain;
+  --character-image-position: center top;
+  --character-background: rgba(0, 0, 0, 0.35);
+}
+
+.MuiBadge-root > .MuiAvatar-root {
+  background: var(--character-background) !important;
+}
+*/
 
 /* ===== ステータスの並び（整数列×固定幅） ===== */
 [variant="bar"] {
@@ -86,6 +118,47 @@
 }
 @media (prefers-reduced-motion: no-preference) {
   [variant="bar"] > div > div:last-child > div:last-child { transition: width .2s ease; }
+}
+
+/* ===== キャラクター画像のサイズ・比率 ===== */
+.MuiBadge-root > .MuiAvatar-root {
+  width: var(--character-width) !important;
+  height: auto !important;
+  aspect-ratio: var(--character-aspect-ratio);
+  flex: 0 0 auto;
+  border-radius: var(--character-radius) !important;
+  overflow: hidden !important;
+  box-sizing: border-box;
+}
+
+.MuiBadge-root
+  > .MuiAvatar-root
+  > .MuiButtonBase-root {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-sizing: border-box;
+  border-radius: inherit !important;
+}
+
+.MuiBadge-root
+  > .MuiAvatar-root
+  > .MuiButtonBase-root
+  > .MuiAvatar-root {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: inherit !important;
+  overflow: hidden !important;
+}
+
+.MuiBadge-root .MuiAvatar-img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: var(--character-image-fit) !important;
+  object-position: var(--character-image-position) !important;
 }
 
 /* ===== イニシアチブ（バッジ）左上＆控えめ ===== */

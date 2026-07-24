@@ -13,12 +13,36 @@ NPCやエネミーの追加でキャラクター一覧の順番が変わって�
 | ファイル | 用途 |
 | --- | --- |
 | [`fixed-status.css`](status/fixed-status.css) | 基本の固定ステータス表示 |
-| [`fixed-status-stylish.css`](status/fixed-status-stylish.css) | レイアウトとゲージの見た目を整えた表示 |
+| [`fixed-status-stylish.css`](status/fixed-status-stylish.css) | レイアウト・ゲージ・キャラクター画像を調整できる表示 |
 
 読み込み例：
 
 ```css
 @import url("https://aoko2477.github.io/ccfolia-css/status/fixed-status-stylish.css");
+```
+
+キャラクター画像を縦長にする例：
+
+```css
+:root {
+  --character-width: 80px;
+  --character-aspect-ratio: 3 / 4;
+  --character-radius: 6px;
+  --character-image-fit: cover;
+  --character-image-position: center top;
+}
+```
+
+`--character-image-fit`を`contain`にすると、画像を切り抜かず全体表示できます。初期値は80px・3:4・角丸6pxで、画像の上端中央を基準に切り抜きます。背景色はCCFOLIAの標準表示を維持します。変更する場合は、次のオプションを追加します。
+
+```css
+:root {
+  --character-background: rgba(0, 0, 0, 0.35);
+}
+
+.MuiBadge-root > .MuiAvatar-root {
+  background: var(--character-background) !important;
+}
 ```
 
 OBSブラウザソースのURL：
