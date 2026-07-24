@@ -2,7 +2,47 @@
 
 CCFOLIAの画面をOBSのブラウザソースへ表示するための、カスタムCSSと作成ツールをまとめたリポジトリです。
 
-## ステータス閾値CSS作成ツール
+## 1. ステータス固定
+
+指定したキャラクターのステータスを、OBS上の決まった位置へ表示できます。このリポジトリの中心となるオリジナル機能です。
+
+NPCやエネミーの追加でキャラクター一覧の順番が変わっても、URLで指定したキャラクターの表示を維持できます。
+
+### CSS
+
+| ファイル | 用途 |
+| --- | --- |
+| [`fixed-status.css`](status/fixed-status.css) | 基本の固定ステータス表示 |
+| [`fixed-status-stylish.css`](status/fixed-status-stylish.css) | レイアウトとゲージの見た目を整えた表示 |
+
+読み込み例：
+
+```css
+@import url("https://aoko2477.github.io/ccfolia-css/status/fixed-status-stylish.css");
+```
+
+OBSブラウザソースのURL：
+
+```text
+https://ccfolia.com/rooms/{ルームID}/characters/{キャラクターID}
+```
+
+### 解説記事
+
+- [OBSにCCFOLIA上の指定したキャラクターのステータスを表示するカスタムCSSについて](https://qiita.com/aoko_2477/items/d04ad1654016262c063e)
+- [CCFOLIAキャラ駒のステータスをOBS配信用におしゃれにするCSSテンプレ](https://qiita.com/aoko_2477/items/470932138755a3687324)
+
+## 2. ステータス閾値
+
+ステータスの残量に応じて、ゲージの色とアニメーションを切り替えられます。
+
+```text
+通常域：ステータスごとの色
+注意域：黄色
+危険域：赤色＋アニメーション
+```
+
+### ステータス閾値CSS作成ツール
 
 対象・閾値・色・アニメーションを画面上で選び、OBSへ貼り付けるCSSを作成できます。
 
@@ -10,7 +50,7 @@ CCFOLIAの画面をOBSのブラウザソースへ表示するための、カス�
 
 主な機能：
 
-- キャラクター一覧と指定キャラクター表示の両方に対応
+- ステータス固定とキャラクター一覧の両方に対応
 - 1つ・複数・すべてのステータスを対象に指定
 - 通常・注意・危険の3段階でゲージを色分け
 - HP・MP・SANなど、ステータスごとの通常色を設定
@@ -25,47 +65,25 @@ CCFOLIAの画面をOBSのブラウザソースへ表示するための、カス�
 
 - [ステータス閾値CSS作成ツールの使い方・解説](https://qiita.com/aoko_2477/items/0f0db2ddd32cf0b5cf57)
 
-## CSS一覧
+### 作成済みCSS
 
-### 指定キャラクターのステータス表示
-
-`status/`には、指定したキャラクターのステータスをOBSへ表示するCSSがあります。
-
-| ファイル | 用途 |
+| ファイル | 対象 |
 | --- | --- |
-| [`fixed-status.css`](status/fixed-status.css) | 基本の固定ステータス表示 |
-| [`fixed-status-stylish.css`](status/fixed-status-stylish.css) | レイアウトとゲージの見た目を整えた表示 |
-| [`fixed-status-threshold-hp.css`](status/fixed-status-threshold-hp.css) | 1番目のステータスを残量で色分け |
-| [`fixed-status-threshold-all.css`](status/fixed-status-threshold-all.css) | すべてのステータスを残量で色分け |
+| [`fixed-status-threshold-hp.css`](status/fixed-status-threshold-hp.css) | 固定表示・1番目のステータス |
+| [`fixed-status-threshold-all.css`](status/fixed-status-threshold-all.css) | 固定表示・すべてのステータス |
+| [`status-all-threshold-hp.css`](modified-code/status-all-threshold-hp.css) | キャラクター一覧・1番目のステータス |
+| [`status-all-threshold-all.css`](modified-code/status-all-threshold-all.css) | キャラクター一覧・すべてのステータス |
 
-読み込み例：
+## 3. 公開CSSを継承して追加した機能
 
-```css
-@import url("https://aoko2477.github.io/ccfolia-css/status/fixed-status-stylish.css");
-```
-
-OBSブラウザソースのURL：
-
-```text
-https://ccfolia.com/rooms/{ルームID}/characters/{キャラクターID}
-```
-
-解説記事：
-
-- [OBSにCCFOLIA上の指定したキャラクターのステータスを表示するカスタムCSSについて](https://qiita.com/aoko_2477/items/d04ad1654016262c063e)
-- [CCFOLIAキャラ駒のステータスをOBS配信用におしゃれにするCSSテンプレ](https://qiita.com/aoko_2477/items/470932138755a3687324)
+`modified-code/`には、他の方が公開しているCSSを`@import`で読み込み、その上に表示調整や追加設定を重ねたCSSを配置しています。参照元とライセンス表記は各ファイル内に記載しています。
 
 ### キャラクター一覧のステータス表示
-
-`modified-code/`には、キャラクター一覧をOBSへ表示するCSSと、その派生コードがあります。元コードのライセンス表記は各CSS内に記載しています。
 
 | ファイル | 用途 |
 | --- | --- |
 | [`status-all.css`](modified-code/status-all.css) | キャラクター一覧の基本表示 |
 | [`status-all-stylish.css`](modified-code/status-all-stylish.css) | レイアウトとゲージの見た目を整えた表示 |
-| [`status-all-threshold-hp.css`](modified-code/status-all-threshold-hp.css) | 1番目のステータスを残量で色分け |
-| [`status-all-threshold-all.css`](modified-code/status-all-threshold-all.css) | すべてのステータスを残量で色分け |
-| [`bgm.css`](modified-code/bgm.css) | BGM関連表示 |
 
 読み込み例：
 
@@ -78,6 +96,16 @@ OBSブラウザソースのURL：
 ```text
 https://ccfolia.com/rooms/{ルームID}/
 ```
+
+### その他
+
+| ファイル | 用途 |
+| --- | --- |
+| [`bgm.css`](modified-code/bgm.css) | BGM関連表示 |
+| [`generate_all_status_color_css.py`](modified-code/generate_all_status_color_css.py) | 一覧用の色分けCSSを作成するスクリプト |
+| [`generate_hp_color_css.py`](modified-code/generate_hp_color_css.py) | HP用の色分けCSSを作成するスクリプト |
+
+## 4. その他のCSS
 
 ### チャット表示
 
@@ -92,13 +120,9 @@ https://ccfolia.com/rooms/{ルームID}/
 
 - [【備忘録】CCFOLIAのルームチャットをOBSで良い感じに表示させるCSS](https://qiita.com/aoko_2477/items/dd6373d427f942b8e30f)
 
-## 関連記事
+## Qiita
 
-- [ステータス閾値CSS作成ツールの使い方・解説](https://qiita.com/aoko_2477/items/0f0db2ddd32cf0b5cf57)
-- [OBSにCCFOLIA上の指定したキャラクターのステータスを表示するカスタムCSSについて](https://qiita.com/aoko_2477/items/d04ad1654016262c063e)
-- [CCFOLIAキャラ駒のステータスをOBS配信用におしゃれにするCSSテンプレ](https://qiita.com/aoko_2477/items/470932138755a3687324)
-- [【備忘録】CCFOLIAのルームチャットをOBSで良い感じに表示させるCSS](https://qiita.com/aoko_2477/items/dd6373d427f942b8e30f)
-- [aoko_2477のQiita記事一覧](https://qiita.com/aoko_2477)
+[aoko_2477のQiita記事一覧](https://qiita.com/aoko_2477)
 
 ## 注意事項
 
